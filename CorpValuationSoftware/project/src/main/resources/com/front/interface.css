@@ -1,0 +1,227 @@
+
+.root {
+    -fx-font-size: 12px;
+}
+
+/*按钮基础样式*/
+.btn-basic {
+    /*文本对齐方式*/
+    -fx-text-alignment: center;
+    /*合适高度*/
+    -fx-pref-height: 38px;
+    /*内边距*/
+    -fx-padding: 0 18px;
+    /*无边框*/
+    -fx-border-style: none;
+    /*鼠标样式*/
+    -fx-cursor: pointer;
+}
+
+/*鼠标覆盖按钮效果*/
+.btn-basic:hover {
+    /*粗体*/
+    -fx-font-weight: bold;
+    /*透明度*/
+    -fx-opacity: 0.8;
+}
+
+/*边框正常弧度按钮*/
+.btn-radius-normal {
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+}
+
+/*边框圆角按钮*/
+.btn-radius-large {
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+}
+
+/*默认主题*/
+.default-theme {
+    -fx-background-color: #fff;
+    -fx-border-color: rgb(230, 230, 230);
+    -fx-text-fill: rgb(110, 110, 110);
+}
+
+/*绿色主题*/
+.green-theme {
+    -fx-background-color: #009688;
+    -fx-text-fill: #fff;
+}
+/*蓝色主题*/
+.blue-theme {
+    -fx-background-color: rgb(30, 158, 255);
+    -fx-text-fill: #fff;
+}
+
+/*内容盒子样式，设置一下圆角和内边距*/
+.box {
+    -fx-border-color: rgb(162, 162, 162);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5 5 5 5;
+}
+
+/*输入框样式*/
+.input-group {
+    /*对齐方式*/
+    -fx-text-alignment: left;
+    /*内容显示方式*/
+    -fx-content-display: inline-block;
+    /*边框色*/
+    -fx-border-color: rgb(230, 230, 230);
+    /*提示文字颜色*/
+    -fx-prompt-text-fill: rgb(162, 162, 162);
+    /*输入文字颜色*/
+    -fx-text-fill: rgb(110, 110, 110);
+    /*边框圆角*/
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+    -fx-pref-height: 23;
+    /*内边距*/
+    -fx-padding: 5 5 5 5;
+}
+
+.grid{
+    -fx-background-color: #2c2a2a;
+    -fx-background-radius: 5;
+    -fx-border-color: #6e6e6e;
+    -fx-border-radius: 5;
+    -fx-border-width: 2;
+}
+
+
+/*灰色字体*/
+.Text{
+    -fx-font-family: Calibri;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #05267a;
+}
+
+/*标题字体*/
+.font-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/*复选框样式*/
+.check-box .box {
+    -fx-background-color: #fff;
+    -fx-border-color: rgb(230, 230, 230);
+    -fx-border-radius: 3px;
+}
+
+/*复选框选中后标记的颜色*/
+.check-box:selected .mark {
+    -fx-background-color: #fff;
+}
+
+/*复选框选中后背景色*/
+.check-box:selected .box {
+    -fx-background-color: rgb(95, 184, 120);
+}
+
+/*单选按钮样式*/
+.radio-button .radio {
+    -fx-background-color: #fff;
+    -fx-border-color: rgb(230, 230, 230);
+    -fx-border-radius: 100;
+}
+
+/*单选按钮中间点的颜色*/
+.radio-button:selected .dot {
+    -fx-background-color: #fff;
+}
+
+/*单选按钮选中后背景色*/
+.radio-button:selected .radio {
+    -fx-background-color: rgb(95, 184, 120);
+}
+
+/*表格内容居中显示
+.table-view .table-column {
+    -fx-alignment: center;
+}*/
+.submit-btn{
+    -fx-border-radius: 0px;
+    -fx-pref-height: 35px;
+    -fx-background-color: rgb(95, 184, 120);
+    -fx-text-fill: rgb(256,256,256);
+}
+
+.submit-btn:hover{
+    -fx-background-color: rgb(72, 138, 91);
+    -fx-text-fill: rgb(210,210,210);
+    -fx-border-color: LightGray;
+}
+
+/*左侧导航菜单按钮样式*/
+.menu-btn {
+    -fx-border-radius: 0px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 20px;
+    -fx-background-color: rgb(255,255,255);
+    -fx-text-fill: rgb(30, 144, 255);
+    -fx-font-family: "Calibri Light";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-border-width: 2px;
+    -fx-border-color: rgb(100, 100, 100);
+}
+
+
+/*左侧导航菜单按钮鼠标悬停效果*/
+.menu-btn:hover {
+    -fx-background-color: rgb(30, 144, 255);
+    -fx-text-fill: #fff;
+    -fx-border-style: none;
+}
+
+/*风琴标题面板字体颜色*/
+.titled-pane {
+    -fx-text-fill: rgb(174, 175, 180);
+}
+
+/*风琴标题面板背景色*/
+.titled-pane > .title {
+    -fx-background-color: rgb(58, 61, 73);
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 14px;
+}
+
+/*tabPane*/
+
+/* 修改TabPane的Pane区域背景颜色 */
+.tab-pane {
+    -fx-background-color: #e6e6e6;
+}
+/* 修改Tab的背景颜色 */
+.tab {
+    -fx-background-color: linear-gradient(to bottom, rgba(238, 82, 82, 0.91), rgb(108, 0, 0));
+}
+/* 修改顶栏的背景颜色 */
+.tab-pane>*.tab-header-area>*.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, rgb(91, 91, 91);
+    -fx-outer-border-radius: 100;
+}
+/* Tab中文本的颜色 */
+.tab-label {
+    -fx-text-fill: #d3d3d3;
+}
+/* 子代选择器，Tab选中的时候选择其子元素tab-label */
+.tab:selected .tab-label {
+    -fx-text-fill: rgb(25,25,112);
+}
+/* tab选中时设置背景颜色 */
+.tab:selected {
+    -fx-background-color: linear-gradient(to bottom, rgb(117, 175, 255), rgb(21, 132, 248));
+}
+/* Tab选中的时候选中其边框并修改样式 */
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-radius: 0px;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-border-color: rgb(112,128,144);
+}
