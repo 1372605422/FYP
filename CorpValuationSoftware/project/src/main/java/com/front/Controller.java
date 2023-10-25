@@ -14,8 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -253,7 +255,6 @@ public class Controller {
     //数据库路径
     public TextField filePath;
 
-
     @FXML
     private Button TPtoInput1;
 
@@ -284,8 +285,14 @@ public class Controller {
     @FXML
     private Tab tab7;
 
+//    tab页面
     @FXML
     private TabPane tabPane;
+//    数据库页面
+    public Pane DatabasePane;
+//    ML页面
+    public Pane MLPane;
+
 
 
     @FXML
@@ -355,6 +362,9 @@ public class Controller {
         setAllZero(DebtInput3, DebtInput4, DebtInput5, DebtInput6, DebtInput7, DebtInput8, DebtInput9, DebtInput10, DirectInput1, DirectInputERP);
         setZero(DirectInputDebt);
 
+        tabPane.setVisible(true);
+        MLPane.setVisible(false);
+        DatabasePane.setVisible(false);
     }
 
     private void setAllZero(TextField equityInput1, TextField equityInput2, TextField equityInput3, TextField equityInput4, TextField equityInput5, TextField stockInput2, TextField stockInput3, TextField stockInput4, TextField debtInput1, TextField debtInput2) {
@@ -1548,5 +1558,23 @@ public class Controller {
             filePath.setText(path);
             System.out.println(path);
         }
+    }
+
+    public void CalculationButton(MouseEvent mouseEvent) {
+        DatabasePane.setVisible(false);
+        MLPane.setVisible(false);
+        tabPane.setVisible(true);
+    }
+
+    public void DatabaseButton(MouseEvent mouseEvent) {
+        tabPane.setVisible(false);
+        MLPane.setVisible(false);
+        DatabasePane.setVisible(true);
+    }
+
+    public void MLButton(MouseEvent mouseEvent) {
+        tabPane.setVisible(false);
+        DatabasePane.setVisible(false);
+        MLPane.setVisible(true);
     }
 }

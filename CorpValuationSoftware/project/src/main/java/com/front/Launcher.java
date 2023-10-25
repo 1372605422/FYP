@@ -15,7 +15,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 800);
+        Scene scene = new Scene(fxmlLoader.load(), 660, 877);
         stage.setScene(scene);
         stage.show();
     }
