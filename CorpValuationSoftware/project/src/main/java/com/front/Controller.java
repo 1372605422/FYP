@@ -3,7 +3,11 @@ package com.front;
 import com.back.StaticData.InputData;
 import com.back.example.CostOfCapital.*;
 import com.back.example.OutPutMethod;
+import com.database.Search;
+import com.leewyatt.rxcontrols.controls.RXLineButton;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +18,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -23,16 +26,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Controller {
@@ -106,7 +112,6 @@ public class Controller {
     public Text B59Text;
     public CheckBox B49B;
     public CheckBox B49V;
-    public Button TPtoInput6;
     public GridPane Sheet1;
     public Button changeButton;
     public GridPane Sheet2;
@@ -123,48 +128,7 @@ public class Controller {
     public TextField FinalYearCapitalRatio;
     public TextField capitalRatioUptoN;
     public Button ChartOpenForCapitalRatio;
-    //database 数据对应id
-    public ComboBox<String> comboBoxForCountry;
-    public ComboBox<String> comboBoxForIndustry;
-    public Button submit_id2;
-    public Button submit_id3;
-    public TextField selectedCountry;
-    public Button submit_id4;
-    public Text industry5;
-    public Text country5;
 
-    //databse 输出数据id
-    public Text ResearchandDevelopmentExpenses;
-    public TextField Symbol;
-    public TextField Industry;
-    public TextField Year;
-    public TextField Revenue;
-    public TextField OperatingExpenses;
-    public TextField CostandExpenses;
-    public TextField OperatingIncome;
-    public TextField InterestExpense;
-    public TextField EBITMargin;
-    public TextField BookVaueofEquity;
-    public TextField WeightedAverageSharesOutstanding;
-    public TextField Currentstockprice;
-    public Text BookValueofdebt;
-    public TextField researchAndDevelopmentExpenses;
-    public TextField bookValueOfDebt;
-    public Text industry4;
-    public Text country4;
-    public Text name5;
-    public Text name4;
-    public Text industry3;
-    public Text country3;
-    public Text name3;
-    public Text industry2;
-    public Text industry1;
-    public Text country2;
-    public Text name2;
-    public Text country1;
-    public Text name1;
-    public Button saveDataBase;
-    public Tab tab8;
 
     public ComboBox<String> comboCoC1;
     public ComboBox<String> comboCoC2;
@@ -252,40 +216,11 @@ public class Controller {
     public GridPane Sheet10;
     public GridPane Sheet11;
     public GridPane Sheet12;
-    //数据库路径
-    public TextField filePath;
 
-    @FXML
-    private Button TPtoInput1;
+    public RXLineButton DatabaseSearchButton;
+    public ComboBox TickerComboBox;
 
-    @FXML
-    private Button TPtoInput2;
-
-    @FXML
-    private Button TPtoInput3;
-
-    @FXML
-    private Button TPtoInput4;
-
-    @FXML
-    private Button TPtoInput5;
-    @FXML
-    private Tab tab1;
-    @FXML
-    private Tab tab2;
-    @FXML
-    private Tab tab5;
-
-    @FXML
-    private Tab tab6;
-    @FXML
-    private Tab tab3;
-    @FXML
-    private Tab tab4;
-    @FXML
-    private Tab tab7;
-
-//    tab页面
+    //    tab页面
     @FXML
     private TabPane tabPane;
 //    数据库页面
@@ -297,21 +232,6 @@ public class Controller {
 
     @FXML
     private ComboBox<String> comboBox1;
-
-    @FXML
-    private ComboBox<String> comboBox2;
-
-    @FXML
-    private ComboBox<String> comboBox3;
-
-    @FXML
-    private ComboBox<String> comboBox4;
-
-    @FXML
-    private ComboBox<String> comboBox5;
-
-    @FXML
-    private Button submit_id;
 
     @FXML
     private void B13CheckYes() {
@@ -365,6 +285,8 @@ public class Controller {
         tabPane.setVisible(true);
         MLPane.setVisible(false);
         DatabasePane.setVisible(false);
+        ObservableList<String> observableTables = FXCollections.observableArrayList(tables);
+        TickerComboBox.setItems(observableTables);
     }
 
     private void setAllZero(TextField equityInput1, TextField equityInput2, TextField equityInput3, TextField equityInput4, TextField equityInput5, TextField stockInput2, TextField stockInput3, TextField stockInput4, TextField debtInput1, TextField debtInput2) {
@@ -380,38 +302,6 @@ public class Controller {
         setZero(debtInput2);
     }
 
-    @FXML
-    void ToTab1(ActionEvent event) {
-        tabPane.getSelectionModel().select(tab1);
-    }
-
-    @FXML
-    void ToTab2(ActionEvent event) {
-        tabPane.getSelectionModel().select(tab2);
-    }
-
-    @FXML
-    void ToTab3(ActionEvent event) {
-        tabPane.getSelectionModel().select(tab3);
-    }
-
-    @FXML
-    void ToTab4(ActionEvent event) {
-        tabPane.getSelectionModel().select(tab4);
-    }
-
-    @FXML
-    void ToTab5(ActionEvent event) {
-        tabPane.getSelectionModel().select(tab5);
-    }
-
-    @FXML
-    void ToTab6(ActionEvent event) {
-        tabPane.getSelectionModel().select(tab6);
-    }
-    public void ToTab7(ActionEvent actionEvent) {
-        tabPane.getSelectionModel().select(tab7);
-    }
 
     @FXML
     void result(ActionEvent event) {
@@ -466,9 +356,9 @@ public class Controller {
             InputData.setB65(isPercentage(B65.getText()));
 
 
-        Parent root = null;
+        Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("result.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("result.fxml")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -477,95 +367,49 @@ public class Controller {
             stage.setTitle("Result");
             stage.setScene(scene);
             stage.show();
-//        } catch (Exception e) {
-//            blankCheck(B8, B9, B2, B10, B11, B12, B15, B16, B17, B18, B19, B20, B21, B23, B24, B25, B26);
-//            blankCheck(B27, B28, B30, B31, B34, B35, B36, B37, B42, B45, B48, B50, B55, B59, B61, B64,B65);
-//            isBlank(B13Yes, B13No);
-//            isBlank(B33Yes, B33No);
-//            isBlank(B41Yes, B41No);
-//            isBlank(B44Yes, B44No);
-//            isBlank(B47Yes, B47No);
-//            isBlank(B54Yes, B54No);
-//            isBlank(B57Yes, B57No);
-//            isBlank(B60Yes, B60No);
-//            isBlank(B63Yes, B63No);
-//            isBlank(B52Yes, B52No);
-//            isBlank(B49B,B49V,B47Yes.isSelected());
-//            Alert();
-//            throw new RuntimeException(e);
-//        }
     }
 
-    private void isBlank(CheckBox c, CheckBox d, boolean selected) {
-        Parent parent = c.getParent();
-        if (selected){
-        parent = c.getParent();
-        if (!(c.isSelected() | d.isSelected())) {
-            parent.setStyle("-fx-border-color: red;");
-        }else {
-            parent.setStyle("-fx-border-color: rgb(230, 230, 230)");
-        }
-        }else {
-            parent.setStyle("");
-        }
-    }
 
-    private void blankCheck(TextField b27, TextField b28, TextField b30, TextField b31, TextField b34, TextField b35, TextField b36, TextField b37, TextField b42, TextField b45, TextField b49, TextField b48, TextField b50, TextField b55, TextField b59, TextField b61, TextField b64) {
-        isBlank(b27);
-        isBlank(b28);
-        isBlank(b30);
-        isBlank(b31);
-        isBlank(b34);
-        isBlank(b35);
-        isBlank(b36);
-        isBlank(b37);
-        isBlank(b42);
-        isBlank(b45);
-        isBlank(b49);
-        isBlank(b48);
-        isBlank(b50);
-    }
-
-    public void B13CheckNo(ActionEvent event) {
+    public void B13CheckNo() {
         boolean b = CheckBoxNo(B13Yes, B13No);
         InputData.setB13(b);
     }
 
-    public void B33CheckYes(ActionEvent event) {
+    public void B33CheckYes() {
         boolean b = CheckBoxYes(B33Yes, B33No);
         InputData.setB33(b);
     }
 
-    public void B33CheckNo(ActionEvent event) {
+    public void B33CheckNo() {
         boolean b = CheckBoxNo(B33Yes, B33No);
         InputData.setB33(b);
     }
 
-    public void B41CheckYes(ActionEvent event) {
+    public void B41CheckYes() {
         boolean b = CheckBoxYes(B41Yes, B41No);
         isVisible(B42Text, B42, B41Yes.isSelected());
         InputData.setB41(b);
     }
 
-    public void B44CheckYes(ActionEvent event) {
+    public void B44CheckYes() {
         boolean b = CheckBoxYes(B44Yes, B44No);
         isVisible(B45Text, B45, B44Yes.isSelected());
         InputData.setB44(b);
     }
 
-    public void B41CheckNo(ActionEvent event) {
+    public void B41CheckNo() {
         boolean b = CheckBoxNo(B41Yes, B41No);
         InputData.setB41(b);
         B42.setText("0");
     }
 
-    public void B44CheckNo(ActionEvent event) {
+    public void B44CheckNo() {
         boolean b = CheckBoxNo(B44Yes, B44No);
         InputData.setB44(b);
         B45.setText("0");
     }
 
-    public void B47CheckYes(ActionEvent event) {
+    public void B47CheckYes() {
         boolean b = CheckBoxYes(B47Yes, B47No);
         isVisible(B48Text, B48, B47Yes.isSelected());
         isVisible(B49Text,B49B, B49V, B47Yes.isSelected());
@@ -573,7 +417,7 @@ public class Controller {
         InputData.setB47(b);
     }
 
-    public void B47CheckNo(ActionEvent event) {
+    public void B47CheckNo() {
         boolean b = CheckBoxNo(B47Yes, B47No);
         InputData.setB47(b);
         B48.setText("0");
@@ -581,50 +425,50 @@ public class Controller {
         B50.setText("0");
     }
 
-    public void B54CheckYes(ActionEvent event) {
+    public void B54CheckYes() {
         boolean b = CheckBoxYes(B54Yes, B54No);
         isVisible(B55Text, B55, B54Yes.isSelected());
         InputData.setB54(b);
     }
 
-    public void B54CheckNo(ActionEvent event) {
+    public void B54CheckNo() {
         boolean b = CheckBoxNo(B54Yes, B54No);
         InputData.setB54(b);
         B55.setText("0");
     }
 
-    public void B58CheckYes(ActionEvent event) {
+    public void B58CheckYes() {
         boolean b = CheckBoxYes(B57Yes, B57No);
         isVisible(B59Text, B59, B57Yes.isSelected());
         InputData.setB57(b);
     }
 
-    public void B58CheckNo(ActionEvent event) {
+    public void B58CheckNo() {
         boolean b = CheckBoxNo(B57Yes, B57No);
         InputData.setB57(b);
         B59.setText("0");
     }
 
-    public void B60CheckYes(ActionEvent event) {
+    public void B60CheckYes() {
         boolean b = CheckBoxYes(B60Yes, B60No);
         isVisible(B61Text, B61, B60Yes.isSelected());
         InputData.setB60(b);
     }
 
-    public void B60CheckNo(ActionEvent event) {
+    public void B60CheckNo() {
         boolean b = CheckBoxNo(B60Yes, B60No);
         InputData.setB60(b);
         B61.setText("0");
     }
 
-    public void B63CheckYes(ActionEvent event) {
+    public void B63CheckYes() {
         boolean b = CheckBoxYes(B63Yes, B63No);
         isVisible(B64Text, B64, B63Yes.isSelected());
         isVisible(B65Text,B65,B63Yes.isSelected());
         InputData.setB63(b);
     }
 
-    public void B63CheckNo(ActionEvent event) {
+    public void B63CheckNo() {
         boolean b = CheckBoxNo(B63Yes, B63No);
         InputData.setB63(b);
         B64.setText("0");
@@ -668,56 +512,25 @@ public class Controller {
         return Double.parseDouble(s) * 0.01;
     }
 
-    public void Alert(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("Please fill in every single component");
-        alert.show();
-    }
 
-
-    public void B52CheckYes(ActionEvent event) {
+    public void B52CheckYes() {
         boolean b = CheckBoxYes(B52Yes, B52No);
         InputData.setB52(b);
     }
 
-    public void B52CheckNo(ActionEvent event) {
+    public void B52CheckNo() {
         boolean b = CheckBoxNo(B52Yes, B52No);
         InputData.setB52(b);
     }
 
-    public void isBlank(DatePicker c) {
-        //如果不填写，填写当前电脑日期还是？
-    }
 
-    //下拉菜单不选择适配数据库，还是？
-    public void isBlank() {
-
-    }
-
-    public void isBlank(TextField c) {
-        if (c.getText().isEmpty()) {
-            c.setStyle("-fx-border-color: red;");
-        }else {
-            c.setStyle("-fx-border-color: rgb(230, 230, 230)");
-        }
-    }
-
-    public void isBlank(CheckBox c, CheckBox d) {
-        Parent parent = c.getParent();
-        if (!(c.isSelected() | d.isSelected())) {
-            parent.setStyle("-fx-border-color: red;");
-        }else {
-            parent.setStyle("-fx-border-color: rgb(230, 230, 230)");
-        }
-    }
-
-    public void B49CheckB(ActionEvent actionEvent) {
+    public void B49CheckB() {
         if (B49V.isSelected()){
             B49V.setSelected(false);
         }
     }
 
-    public void B49CheckV(ActionEvent actionEvent) {
+    public void B49CheckV() {
         if (B49B.isSelected()){
             B49B.setSelected(false);
         }
@@ -732,7 +545,7 @@ public class Controller {
     int upToNYearForCapitalRatio;
 
 
-    public void openNewWindow(ActionEvent actionEvent) {
+    public void openNewWindow() {
         nextYear = Double.parseDouble(nextYearGrowthRate.getText());
         finalYear = Double.parseDouble(finalYearGrowthRate.getText());
         upToNYearForGrowthRate = Integer.parseInt(growthRateUpToN.getText());
@@ -802,7 +615,7 @@ public class Controller {
                System.out.println(s);
            }
        });
-        OutPutMethod outPutMethod = new OutPutMethod();
+
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -847,7 +660,7 @@ public class Controller {
 //                     Read the contents of the JS file
 //                    String script = new String(Files.readAllBytes(Paths.get("src/main/resources/com/front/index.js")));
                     URL url = Controller.class.getResource("index.js");
-                    String script = null;
+                    String script;
                     try {
                         script = new String(Files.readAllBytes(Paths.get(url.toURI())));
                     } catch (URISyntaxException e) {
@@ -856,12 +669,10 @@ public class Controller {
 
 
                     URL url1 = Controller.class.getResource("echarts.js");
-                    String script1 = null;
+                    String script1;
                     try {
                         script1 = new String(Files.readAllBytes(Paths.get(url1.toURI())));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (URISyntaxException e) {
+                    } catch (IOException | URISyntaxException e) {
                         throw new RuntimeException(e);
                     }
 
@@ -886,7 +697,7 @@ public class Controller {
         });
     }
 
-    public void openNewWindowForCaptialRatio(ActionEvent actionEvent) {
+    public void openNewWindowForCaptialRatio() {
         nextYearForCapitalRatio = Double.parseDouble(captialRatioForNextYear.getText());
         finalYearForCapitalRatio = Double.parseDouble(FinalYearCapitalRatio.getText());
         System.out.println(finalYearForCapitalRatio);
@@ -983,7 +794,7 @@ public class Controller {
                 try {
                     // Read the contents of the JS file
                     URL url = Controller.class.getResource("index.js");
-                    String script = null;
+                    String script;
                     try {
                         script = new String(Files.readAllBytes(Paths.get(url.toURI())));
                     } catch (URISyntaxException e) {
@@ -991,7 +802,7 @@ public class Controller {
                     }
 
                     URL url1 = Controller.class.getResource("echarts.js");
-                    String script1 = null;
+                    String script1;
                     try {
                         script1 = new String(Files.readAllBytes(Paths.get(url1.toURI())));
                     } catch (IOException e) {
@@ -1018,7 +829,7 @@ public class Controller {
             }
         });
     }
-    public void LightMode(ActionEvent actionEvent) {
+    public void LightMode() {
         /*
         Scene scene = changeButton.getScene();
 
@@ -1121,48 +932,6 @@ public class Controller {
 
     }
 
-
-    public void setValues(ArrayList<String> companyList,ArrayList<String> countryList,ArrayList<String> industryList){
-//        int companySize = companyList.size();
-//        if (companySize < 5){
-//            for (int i = 0; i < (5-companySize); i++) {
-//                companyList.add("NULL");
-//            }
-//        }
-        setUpBlank(companyList.size(),companyList);
-        setUpBlank(countryList.size(),countryList);
-        setUpBlank(industryList.size(),industryList);
-        name1.setText(companyList.get(0));
-        name2.setText(companyList.get(1));
-        name3.setText(companyList.get(2));
-        name4.setText(companyList.get(3));
-        name5.setText(companyList.get(4));
-
-        country1.setText(countryList.get(0));
-        country2.setText(countryList.get(1));
-        country3.setText(countryList.get(2));
-        country4.setText(countryList.get(3));
-        country5.setText(countryList.get(4));
-
-        industry1.setText(industryList.get(0));
-        industry2.setText(industryList.get(1));
-        industry3.setText(industryList.get(2));
-        industry4.setText(industryList.get(3));
-        industry5.setText(industryList.get(4));
-    }
-
-    public void setUpBlank(int size, ArrayList<String> list){
-        if (size < 5){
-            for (int i = 0; i < (5-size); i++) {
-                list.add("NULL");
-            }
-        }
-    }
-
-
-
-
-
     public void ChangeVersion(String[] strings, GridPane gridPane){
         int i=0;
         for (Node node : gridPane.getChildren()) {
@@ -1180,10 +949,9 @@ public class Controller {
                 }
             }
         }
-        System.out.println("");
     }
 
-    public void Eng_Version(ActionEvent actionEvent) {
+    public void Eng_Version() {
         String[] EnglishSheet1={"Date of valuation", "Company name", "Country", "Industry", "Industry (Global)",
                 "Revenues", "EBIT or Operating income", "Interest expense", "Book value of equity", "Book value of debt",
                 "R&D expense to capitalize?", "Cash and Marketable Securities",
@@ -1269,54 +1037,9 @@ public class Controller {
         ChangeVersion(EnglishSheet10,Sheet10);
         ChangeVersion(EnglishSheet11,Sheet11);
         ChangeVersion(EnglishSheet12,Sheet12);
-
-        /*
-        int i=0;
-        for (Node node : Sheet1.getChildren()) {
-            if (GridPane.getColumnIndex(node) == 1) {
-                // Check if node is in second column
-                if (node instanceof Text) {
-                    // Check if node is a label or its subclass
-                    System.out.println("233"+((Text) node).getText()+"233"+",");
-                    ((Text) node).setText(EnglishSheet1[i]);
-                    //System.out.println(ChineseSheet1[i]);
-                    i++;
-                    // Cast node to Labeled and set its text
-                }
-            }
-        }
-         */
-
-    }
-    String company;
-
-
-
-
-    boolean flag = true;
-    public void changeDataBaseValue(ActionEvent event) {
-        flag = !flag;
-        changeAble(flag);
     }
 
-    public void changeAble(boolean flag){
-        Symbol.setDisable(flag);
-        Industry.setDisable(flag);
-        Year.setDisable(flag);
-        Revenue.setDisable(flag);
-        OperatingExpenses.setDisable(flag);
-        researchAndDevelopmentExpenses.setDisable(flag);
-        WeightedAverageSharesOutstanding.setDisable(flag);
-        CostandExpenses.setDisable(flag);
-        OperatingIncome.setDisable(flag);
-        InterestExpense.setDisable(flag);
-        EBITMargin.setDisable(flag);
-        BookVaueofEquity.setDisable(flag);
-        bookValueOfDebt.setDisable(flag);
-        Currentstockprice.setDisable(flag);
-    }
-
-    public void CoCSelect1(ActionEvent actionEvent) {
+    public void CoCSelect1() {
         if(comboCoC1.getValue().equals("Direct input")){
             InputForCapital.setB9ApproachForEstimatingBeta("Direct input");
             DirectInput1.setVisible(true);
@@ -1333,7 +1056,7 @@ public class Controller {
         }
     }
 
-    public void CoCSelect2(ActionEvent actionEvent) {
+    public void CoCSelect2() {
         if(comboCoC2.getValue().equals("Will input")){
             DirectInputERP.setVisible(true);
             CoCText2.setVisible(true);
@@ -1344,7 +1067,7 @@ public class Controller {
         }
     }
 
-    public void CoCSelect3(ActionEvent actionEvent) {
+    public void CoCSelect3() {
         if(comboCoC3.getValue().equals("Direct input")){
             DirectInputDebt.setVisible(true);
             CoCText3.setVisible(true);
@@ -1374,7 +1097,7 @@ public class Controller {
         }
     }
 
-    public void CoCSelect4(ActionEvent actionEvent){
+    public void CoCSelect4(){
         if(comboCoC4.getValue().equals("1-safer")){
             InputForCapital.setB24SyntheticRatingType("1");
         } else {
@@ -1382,7 +1105,7 @@ public class Controller {
         }
     }
 
-    public void CoCSelect5(ActionEvent actionEvent){
+    public void CoCSelect5(){
         InputForCapital.setB23ActualRating(comboCoC5.getValue());
     }
 
@@ -1439,30 +1162,17 @@ public class Controller {
     }
 
 
-    public void ToTab8(ActionEvent actionEvent) {
-        tabPane.getSelectionModel().select(tab9);
-    }
-
-    public void ToTab81(ActionEvent actionEvent) {
+    public void ToTab81() {
         tabPane.getSelectionModel().select(tab9);
         CostTabPane.getSelectionModel().select(tab81);
     }
 
 
-    public void ToTab83(ActionEvent actionEvent) {
-        tabPane.getSelectionModel().select(tab9);
-        CostTabPane.getSelectionModel().select(tab82);
-    }
-
-    public void ToTab84(ActionEvent actionEvent) {
-        tabPane.getSelectionModel().select(tab9);
-        CostTabPane.getSelectionModel().select(tab83);
-    }
     public void setZero(TextField textField){
         textField.setText("0");
     }
 
-    public void submitCostOfCapital(ActionEvent actionEvent) {
+    public void submitCostOfCapital() {
             //cost of capital part: Equity
             InputData.setB18(Double.parseDouble(EquityInput1.getText()));
             InputData.setB19(Double.parseDouble(EquityInput2.getText()));
@@ -1541,40 +1251,57 @@ public class Controller {
             cocOutput34.setText(String.valueOf(CostE50CostOfCapital.getCostOfCapital()));
     }
 
-    //设置数据库方法
-    String path;
-    public void SetFilePath(ActionEvent actionEvent) {
-        path = filePath.getText();
-    }
-
-    public void SelectFile(ActionEvent actionEvent) {
-        Stage stage = new Stage();
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(stage);
-        if (selectedFile != null) {
-
-            path = selectedFile.getAbsolutePath();
-
-            filePath.setText(path);
-            System.out.println(path);
-        }
-    }
-
-    public void CalculationButton(MouseEvent mouseEvent) {
+    public void CalculationButton() {
         DatabasePane.setVisible(false);
         MLPane.setVisible(false);
         tabPane.setVisible(true);
     }
 
-    public void DatabaseButton(MouseEvent mouseEvent) {
+    public void DatabaseButton() {
         tabPane.setVisible(false);
         MLPane.setVisible(false);
         DatabasePane.setVisible(true);
     }
 
-    public void MLButton(MouseEvent mouseEvent) {
+    public void MLButton() {
         tabPane.setVisible(false);
         DatabasePane.setVisible(false);
         MLPane.setVisible(true);
     }
+
+    Connection conn;
+    List<String> tables;
+    //链接数据库
+
+    {
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:FinanceData.db");
+            tables = Search.getDataTable(conn);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //将用户输入查询数据库
+    public void DatabaseSearch() throws SQLException {
+        System.out.println("ok");
+        String ticker = TickerComboBox.getEditor().getText();
+        if (tables.contains(ticker)){
+            //查询数据，并保存到一个list中
+            ResultSet resultSet = Search.searchTable(conn, ticker);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText("Data found!");
+            alert.show();
+
+        } else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WARNING");
+            alert.setHeaderText("Data miss!");
+            alert.setContentText("Query data does not exist in the database, do you want to do a web search?");
+            alert.show();
+        }
+    }
+
 }

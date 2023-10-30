@@ -9,6 +9,7 @@ module com.front {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.dataformat.csv;
     requires itextpdf;
+    requires rxcontrols;
 
     opens com.front to javafx.fxml;
     exports com.front;
