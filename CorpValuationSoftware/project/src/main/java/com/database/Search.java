@@ -43,10 +43,4 @@ public class Search {
     // download到本地，需要创建excel表格并将数据保存在excel中
 
     //import excel表格，并将按格式做成的表格保存在database中
-    public static void main(String[] args) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:FinanceData.db");
-        List<String> strings = getDataTable(conn);
-        System.out.println(strings);
-        conn.close();
-    }
 }

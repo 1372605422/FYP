@@ -8,6 +8,7 @@ import com.leewyatt.rxcontrols.controls.RXLineButton;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -285,7 +287,6 @@ public class Controller {
         tabPane.setVisible(true);
         MLPane.setVisible(false);
         DatabasePane.setVisible(false);
-        ObservableList<String> observableTables = FXCollections.observableArrayList(tables);
         TickerComboBox.setItems(observableTables);
     }
 
@@ -1271,12 +1272,22 @@ public class Controller {
 
     Connection conn;
     List<String> tables;
-    //链接数据库
+    ObservableList<String> observableTables;
+    ResultSet resultSet;
 
+    //链接数据库
     {
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:FinanceData.db");
             tables = Search.getDataTable(conn);
+            tables.sort(new Comparator<String>() {
+                @Override
+                public int compare(String s1, String s2) {
+                    return Character.compare(s1.charAt(0), s2.charAt(0));
+                }
+            });
+
+            observableTables = FXCollections.observableArrayList(tables);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -1284,17 +1295,17 @@ public class Controller {
 
     //将用户输入查询数据库
     public void DatabaseSearch() throws SQLException {
-        System.out.println("ok");
         String ticker = TickerComboBox.getEditor().getText();
         if (tables.contains(ticker)){
             //查询数据，并保存到一个list中
-            ResultSet resultSet = Search.searchTable(conn, ticker);
+            resultSet = Search.searchTable(conn, ticker);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Message");
             alert.setHeaderText("Data found!");
             alert.show();
 
+            B2.setText(ticker);
         } else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("WARNING");
@@ -1304,4 +1315,58 @@ public class Controller {
         }
     }
 
+
+    //将数据加载到计算界面
+    public void DatabaseLoad() throws SQLException {
+        if (resultSet == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WARNING");
+            alert.setHeaderText("Data miss!");
+            alert.setContentText("Please select the company you want to search for!");
+            alert.show();
+            return;
+        }
+
+        double totalAssets = 0.0;
+
+        while (resultSet.next()) {
+            String columnName = resultSet.getString("income_statement_index");
+            double value = resultSet.getDouble("income_statement_value");
+            String balanceSheetIndex = resultSet.getString("balance_sheet_index");
+            double balanceSheetValue = resultSet.getDouble("balance_sheet_value");
+            //cashFlow table 暂时不用
+//            String cashFlowIndex = resultSet.getString("cashflow_index");
+//            double cashFlowValue = resultSet.getDouble("cashflow_value");
+            String currentPrice = resultSet.getString("current_price");
+            double currentPriceValue = resultSet.getDouble("current_price_value");
+            
+            if (Objects.equals(columnName, "EBIT")){
+                B9.setText(String.valueOf(value));
+            } else if (Objects.equals(columnName, "Total Revenue")){
+                B8.setText(String.valueOf(value));
+            } else if (Objects.equals(columnName, "Interest Expense")){
+                B10.setText(String.valueOf(value));
+            } else if (Objects.equals(columnName, "Tax Rate For Calcs")){
+                B20.setText(String.valueOf(value));
+            } else if (Objects.equals(balanceSheetIndex, "Cash And Cash Equivalents")) {
+                B15.setText(String.valueOf(balanceSheetValue));
+            }else if (Objects.equals(balanceSheetIndex, "Minority Interest")) {
+                B17.setText(String.valueOf(balanceSheetValue));
+            } else if (Objects.equals(currentPrice, "current_price")) {
+                B19.setText(String.valueOf(currentPriceValue));
+            } else if (Objects.equals(balanceSheetIndex, "Ordinary Shares Number")) {
+                B34.setText(String.valueOf(balanceSheetValue));
+            } else if (Objects.equals(balanceSheetIndex, "Total Assets")) {
+                totalAssets = balanceSheetValue;
+            } else if (Objects.equals(balanceSheetIndex, "Total Equity Gross Minority Interest")) {
+                double BookValueOfDebt = totalAssets - balanceSheetValue;
+                B12.setText(String.valueOf(BookValueOfDebt));
+            } else if (Objects.equals(balanceSheetIndex, "Total Liabilities Net Minority Interest")) {
+                double BookValueOfEquity = totalAssets - balanceSheetValue;
+                B11.setText(String.valueOf(BookValueOfEquity));
+            }
+        }
+
+        CalculationButton();
+    }
 }
