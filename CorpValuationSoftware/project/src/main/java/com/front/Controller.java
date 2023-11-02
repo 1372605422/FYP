@@ -3,12 +3,12 @@ package com.front;
 import com.back.StaticData.InputData;
 import com.back.example.CostOfCapital.*;
 import com.back.example.OutPutMethod;
+import com.database.FileUtils;
 import com.database.Search;
 import com.leewyatt.rxcontrols.controls.RXLineButton;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,11 +27,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
-
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -41,6 +41,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Controller {
@@ -244,8 +245,10 @@ public class Controller {
 
     @FXML
     private void initialize() {
-        //ObservableList<String> observableList = FXCollections.observableArrayList("111", "222", "333");
-        //combo1.setItems(observableList);
+
+        LocalDate currentDate = LocalDate.now();
+        B1.setValue(currentDate);
+
         comboBox1.getItems().addAll(
                 "United States",
                 "United Kingdom",
@@ -1311,8 +1314,42 @@ public class Controller {
             alert.setTitle("WARNING");
             alert.setHeaderText("Data miss!");
             alert.setContentText("Query data does not exist in the database, do you want to do a web search?");
+            ButtonType customButtonType = new ButtonType("Search Online");
+            ButtonType cancelButtonType = ButtonType.CANCEL;
+
+            alert.getButtonTypes().setAll(customButtonType, cancelButtonType);
+
+            DialogPane dialogPane = alert.getDialogPane();
+            Button customButton = (Button) dialogPane.lookupButton(customButtonType);
+            customButton.setOnAction(e -> {
+                // 网上搜索并导入到数据中
+                String onlineTicker = TickerComboBox.getEditor().getText();
+                if (Objects.equals(onlineTicker, "")){
+                    Alert alert1 = new Alert(Alert.AlertType.WARNING);
+                    alert1.setTitle("WARNING");
+                    alert1.setHeaderText("Empty Data or wrong ticker!");
+                    alert1.setContentText("Please enter a correct Ticker!");
+                    alert.close();
+                    alert1.show();
+                }else{
+                    String filePath = "GetData/config/config.json";
+                    FileUtils.writeFile(filePath,onlineTicker);
+                    int exitcode = Search.searchOline();
+                    if (exitcode != 0){
+                        Alert alert1 = new Alert(Alert.AlertType.WARNING);
+                        alert1.setTitle("WARNING");
+                        alert1.setHeaderText("Empty Data or wrong ticker!");
+                        alert1.setContentText("Please enter a correct Ticker!");
+                        alert.close();
+                        alert1.show();
+                    }
+                }
+            });
+
+
             alert.show();
         }
+
     }
 
 
@@ -1347,7 +1384,7 @@ public class Controller {
             } else if (Objects.equals(columnName, "Interest Expense")){
                 B10.setText(String.valueOf(value));
             } else if (Objects.equals(columnName, "Tax Rate For Calcs")){
-                B20.setText(String.valueOf(value));
+                B20.setText(String.valueOf(value * 100));
             } else if (Objects.equals(balanceSheetIndex, "Cash And Cash Equivalents")) {
                 B15.setText(String.valueOf(balanceSheetValue));
             }else if (Objects.equals(balanceSheetIndex, "Minority Interest")) {
@@ -1355,7 +1392,7 @@ public class Controller {
             } else if (Objects.equals(currentPrice, "current_price")) {
                 B19.setText(String.valueOf(currentPriceValue));
             } else if (Objects.equals(balanceSheetIndex, "Ordinary Shares Number")) {
-                B34.setText(String.valueOf(balanceSheetValue));
+                B18.setText(String.valueOf(balanceSheetValue));
             } else if (Objects.equals(balanceSheetIndex, "Total Assets")) {
                 totalAssets = balanceSheetValue;
             } else if (Objects.equals(balanceSheetIndex, "Total Equity Gross Minority Interest")) {
@@ -1369,4 +1406,27 @@ public class Controller {
 
         CalculationButton();
     }
+
+    public void DataBaseImport() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        File selectedDirectory = fileChooser.showOpenDialog(new Stage());
+        if (selectedDirectory != null) {
+            String folderPath = selectedDirectory.getAbsolutePath();
+            System.out.println(folderPath);
+        }
+    }
+
+    public void DatabaseDownload() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        File selectedDirectory = directoryChooser.showDialog(new Stage());
+        if (selectedDirectory != null) {
+            String folderPath = selectedDirectory.getAbsolutePath();
+            System.out.println(folderPath);
+        }
+    }
+
 }

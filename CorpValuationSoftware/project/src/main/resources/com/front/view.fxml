@@ -27,7 +27,7 @@
    <center>
       <StackPane>
          <children>
-            <TabPane fx:id="tabPane" prefHeight="928.0" prefWidth="562.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPane" prefHeight="928.0" prefWidth="562.0" tabClosingPolicy="UNAVAILABLE" visible="false">
                <tabs>
                   <Tab fx:id="tab1" closable="false" text="Basic Input">
                      <content>
@@ -987,7 +987,7 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <Pane fx:id="DatabasePane" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <Pane fx:id="DatabasePane" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <GridPane alignment="CENTER" hgap="10.0" layoutX="34.0" prefHeight="497.0" prefWidth="526.0">
                     <columnConstraints>
@@ -1020,8 +1020,8 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="214.21630859375" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                         <RXLineButton fx:id="DatabaseSearchButton" onMouseClicked="#DatabaseSearch" text="Search" GridPane.columnIndex="2" />
                         <RXLineButton onMouseClicked="#DatabaseLoad" text="Load" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <RXLineButton text="Download" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <RXLineButton text="Import" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <RXLineButton onMouseClicked="#DatabaseDownload" text="Download" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <RXLineButton onMouseClicked="#DataBaseImport" text="Import" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children></Pane>

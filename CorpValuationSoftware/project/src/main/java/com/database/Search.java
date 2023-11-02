@@ -1,4 +1,8 @@
 package com.database;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +39,23 @@ public class Search {
         return statement.executeQuery(sql);
     }
 
+    public static int searchOline(){
+        //TODO 等python文件封装好后，再写
+        return 1;
+    }
+
     //调用info显示到database页面
 
-    //调用financials当用户点击load时
 
     //手动添加数据部分
-    // download到本地，需要创建excel表格并将数据保存在excel中
 
+    // download到本地，需要创建excel表格并将数据保存在excel中
+    public static void downloadData(){
+        //生成一份excel文件，文件格式类似于彭博终端，表中分别打印income statement，balance sheet and cash flow等数据
+    }
     //import excel表格，并将按格式做成的表格保存在database中
+    public static void importData(){
+        //将用户输入的数据，更新到数据库中
+    }
+
 }
