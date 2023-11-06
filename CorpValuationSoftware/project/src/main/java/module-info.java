@@ -10,6 +10,7 @@ module com.front {
     requires com.fasterxml.jackson.dataformat.csv;
     requires itextpdf;
     requires rxcontrols;
+    requires org.apache.poi.ooxml;
 
     opens com.front to javafx.fxml;
     exports com.front;

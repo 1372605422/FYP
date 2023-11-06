@@ -1372,8 +1372,9 @@ public class Controller {
             String balanceSheetIndex = resultSet.getString("balance_sheet_index");
             double balanceSheetValue = resultSet.getDouble("balance_sheet_value");
             //cashFlow table 暂时不用
-//            String cashFlowIndex = resultSet.getString("cashflow_index");
-//            double cashFlowValue = resultSet.getDouble("cashflow_value");
+            String cashFlowIndex = resultSet.getString("cashflow_index");
+            double cashFlowValue = resultSet.getDouble("cashflow_value");
+
             String currentPrice = resultSet.getString("current_price");
             double currentPriceValue = resultSet.getDouble("current_price_value");
             
@@ -1423,9 +1424,17 @@ public class Controller {
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         File selectedDirectory = directoryChooser.showDialog(new Stage());
-        if (selectedDirectory != null) {
+        if (selectedDirectory != null & resultSet != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
             System.out.println(folderPath);
+            String ticker = TickerComboBox.getEditor().getText();
+            Search.downloadData(ticker,folderPath, resultSet);
+        }else{
+            Alert alert1 = new Alert(Alert.AlertType.WARNING);
+            alert1.setTitle("WARNING");
+            alert1.setHeaderText("Empty Data or wrong ticker!");
+            alert1.setContentText("Please enter a correct Ticker!");
+            alert1.show();
         }
     }
 
