@@ -1355,6 +1355,17 @@ public class Controller {
 
     //将数据加载到计算界面
     public void DatabaseLoad() throws SQLException {
+        B8.clear();
+        B9.clear();
+        B10.clear();
+        B11.clear();
+        B12.clear();
+        B15.clear();
+        B17.clear();
+        B18.clear();
+        B19.clear();
+        B20.clear();
+
         if (resultSet == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("WARNING");
@@ -1372,12 +1383,12 @@ public class Controller {
             String balanceSheetIndex = resultSet.getString("balance_sheet_index");
             double balanceSheetValue = resultSet.getDouble("balance_sheet_value");
             //cashFlow table 暂时不用
-            String cashFlowIndex = resultSet.getString("cashflow_index");
-            double cashFlowValue = resultSet.getDouble("cashflow_value");
+//            String cashFlowIndex = resultSet.getString("cashflow_index");
+//            double cashFlowValue = resultSet.getDouble("cashflow_value");
 
             String currentPrice = resultSet.getString("current_price");
             double currentPriceValue = resultSet.getDouble("current_price_value");
-            
+
             if (Objects.equals(columnName, "EBIT")){
                 B9.setText(String.valueOf(value));
             } else if (Objects.equals(columnName, "Total Revenue")){
@@ -1424,6 +1435,7 @@ public class Controller {
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         File selectedDirectory = directoryChooser.showDialog(new Stage());
+
         if (selectedDirectory != null & resultSet != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
             System.out.println(folderPath);
@@ -1435,7 +1447,13 @@ public class Controller {
             alert1.setHeaderText("Empty Data or wrong ticker!");
             alert1.setContentText("Please enter a correct Ticker!");
             alert1.show();
+            return;
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Notice");
+        alert.setHeaderText("Export finish!");
+        alert.show();
     }
 
 }

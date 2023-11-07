@@ -28,7 +28,7 @@ public class DatabaseTest {
 //                Statement statement = conn.createStatement();
 //                ResultSet resultSet = statement.executeQuery("SELECT name FROM sqlite_master WHERE type='table'");
 
-                Search.downloadData("AAPL","/Users/allan/Downloads/FYP", resultSet);
+                Search.downloadData("GOOG","/Users/allan/Downloads/FYP", resultSet);
                 while (resultSet.next()) {
                     String tableName = resultSet.getString("name");
                     System.out.println(tableName);

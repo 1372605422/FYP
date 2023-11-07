@@ -1008,19 +1008,15 @@
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Stock Ticker" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" GridPane.rowIndex="1" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Profile" GridPane.rowIndex="6" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Profile" GridPane.rowIndex="2" />
                         <ComboBox fx:id="TickerComboBox" editable="true" prefHeight="26.0" prefWidth="286.0" promptText="Please input a ticker" GridPane.columnIndex="1" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Key Executives" GridPane.rowIndex="2" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="85.21630859375" GridPane.rowIndex="3" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="89.21630859375" GridPane.rowIndex="4" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="90.21630859375" GridPane.rowIndex="5" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="451.21630859375" GridPane.rowIndex="7" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="213.21630859375" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="213.21630859375" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="214.21630859375" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="423.21630859375" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Text>
                         <RXLineButton fx:id="DatabaseSearchButton" onMouseClicked="#DatabaseSearch" text="Search" GridPane.columnIndex="2" />
                         <RXLineButton onMouseClicked="#DatabaseLoad" text="Load" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <RXLineButton onMouseClicked="#DatabaseDownload" text="Download" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <RXLineButton onMouseClicked="#DatabaseDownload" text="Export" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <RXLineButton onMouseClicked="#DataBaseImport" text="Import" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>

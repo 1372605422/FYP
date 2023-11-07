@@ -54,21 +54,20 @@ public class Search {
     //手动添加数据部分
 
 
-
     // download到本地，需要创建excel表格并将数据保存在excel中
     public static void downloadData(String name, String savePath, ResultSet resultSet){
         //生成一份excel文件，文件格式类似于彭博终端，表中分别打印income statement，balance sheet and cash flow等数据
         String filePath = Search.copySheet(name, savePath);
+        boolean flag = true;
+        boolean flag1 = true;
+        boolean flag2 = true;
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
              XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream)) {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
             int rowOne = 3;
-            Row row = sheet.getRow(rowOne);
-            if (row == null) {
-                row = sheet.createRow(rowOne);
-            }
+            Row row = sheet.createRow(rowOne);
             Cell cell;
 
             while (resultSet.next()) {
@@ -80,27 +79,83 @@ public class Search {
                 double cashFlowValue = resultSet.getDouble("cashflow_value");
                 String priceIndex = resultSet.getString("current_price");
 
-                cell = row.createCell(0);
+
                 if (Objects.equals(balanceSheetIndex, null) && Objects.equals(cashFlowIndex, null)) {
+                    if (flag){
+                        cell = row.createCell(0);
+                        cell.setCellValue("Incomde Statement");
+                        cell = row.createCell(1);
+                        cell.setCellValue("");
+
+                        rowOne++;
+                        row = sheet.getRow(rowOne);
+                        // 写入income statement
+                        cell = row.createCell(0);
+                        cell.setCellValue(columnName);
+                        cell = row.createCell(1);
+                        cell.setCellValue(value);
+
+                        flag = false;
+                    } else if (Objects.equals(priceIndex, "current_price")) {
+                        break;
+                    } else {
                     // 写入income statement
-                    cell.setCellValue(columnName);
+                        cell = row.createCell(0);
+                        cell.setCellValue(columnName);
 
-                    cell = row.createCell(1);
-                    cell.setCellValue(value);
+                        cell = row.createCell(1);
+                        cell.setCellValue(value);
+                    }
+
                 } else if (Objects.equals(columnName, null) && Objects.equals(cashFlowIndex, null)) {
-                    cell = row.createCell(0);
-                    cell.setCellValue(balanceSheetIndex);
+                    if (flag1){
+                        cell = row.createCell(0);
+                        cell.setCellValue("Balance Sheet");
+                        cell = row.createCell(1);
+                        cell.setCellValue("");
 
-                    cell = row.createCell(1);
-                    cell.setCellValue(balanceSheetValue);
-                } else if (Objects.equals(columnName, null) && Objects.equals(balanceSheetIndex, null) && priceIndex == null) {
+                        rowOne++;
+                        row = sheet.getRow(rowOne);
+                        // 写入income statement
+                        cell = row.createCell(0);
+                        cell.setCellValue(balanceSheetIndex);
+                        cell = row.createCell(1);
+                        cell.setCellValue(balanceSheetValue);
 
-                    cell = row.createCell(0);
-                    cell.setCellValue(cashFlowIndex);
 
-                    cell = row.createCell(1);
-                    cell.setCellValue(cashFlowValue);
+                        flag1 = false;
+                    }else {
+                        cell = row.createCell(0);
+                        cell.setCellValue(balanceSheetIndex);
+
+                        cell = row.createCell(1);
+                        cell.setCellValue(balanceSheetValue);
+                    }
+                } else if (Objects.equals(columnName, null) && Objects.equals(balanceSheetIndex, null)) {
+                    if (flag2){
+                        cell = row.createCell(0);
+                        cell.setCellValue("Cash Flow");
+                        cell = row.createCell(1);
+                        cell.setCellValue("");
+
+                        rowOne++;
+                        row = sheet.getRow(rowOne);
+                        // 写入income statement
+                        cell = row.createCell(0);
+                        cell.setCellValue(cashFlowIndex);
+                        cell = row.createCell(1);
+                        cell.setCellValue(cashFlowValue);
+
+                        flag2 = false;
+                    }else {
+                        cell = row.createCell(0);
+                        cell.setCellValue(cashFlowIndex);
+
+                        cell = row.createCell(1);
+                        cell.setCellValue(cashFlowValue);
+                    }
                 }
+
 
                 rowOne++;
                 row = sheet.getRow(rowOne);
@@ -142,9 +197,5 @@ public class Search {
     public static void importData(){
         //将用户输入的数据，更新到数据库中
         
-    }
-
-    public static void main(String[] args) {
-
     }
 }
