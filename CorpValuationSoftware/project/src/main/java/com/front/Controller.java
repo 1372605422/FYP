@@ -1277,6 +1277,7 @@ public class Controller {
     List<String> tables;
     ObservableList<String> observableTables;
     ResultSet resultSet;
+    String osName = System.getProperty("os.name");
 
     //链接数据库
     {
@@ -1426,8 +1427,30 @@ public class Controller {
         File selectedDirectory = fileChooser.showOpenDialog(new Stage());
         if (selectedDirectory != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
-            System.out.println(folderPath);
+
+            String fileName = "";
+            //适配不同操作系统
+            if (osName.startsWith("Windows")) {
+                fileName = folderPath.substring(folderPath.lastIndexOf("\\") + 1);
+            } else if (osName.startsWith("Mac")) {
+                fileName = folderPath.substring(folderPath.lastIndexOf("/") + 1);
+            }
+            String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf("."));
+            System.out.println(fileNameWithoutExtension);
+            Search.importData(fileNameWithoutExtension, folderPath, conn);
+        }else{
+            Alert alert1 = new Alert(Alert.AlertType.WARNING);
+            alert1.setTitle("WARNING");
+            alert1.setHeaderText("Empty Data or wrong ticker!");
+            alert1.setContentText("Please enter a correct Ticker!");
+            alert1.show();
+            return;
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Notice");
+        alert.setHeaderText("Import finish!");
+        alert.show();
     }
 
     public void DatabaseDownload() {
@@ -1438,7 +1461,6 @@ public class Controller {
 
         if (selectedDirectory != null & resultSet != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
-            System.out.println(folderPath);
             String ticker = TickerComboBox.getEditor().getText();
             Search.downloadData(ticker,folderPath, resultSet);
         }else{

@@ -83,7 +83,7 @@ public class Search {
                 if (Objects.equals(balanceSheetIndex, null) && Objects.equals(cashFlowIndex, null)) {
                     if (flag){
                         cell = row.createCell(0);
-                        cell.setCellValue("Incomde Statement");
+                        cell.setCellValue("Income Statement");
                         cell = row.createCell(1);
                         cell.setCellValue("");
 
@@ -194,8 +194,105 @@ public class Search {
     }
 
     //import excel表格，并将按格式做成的表格保存在database中
-    public static void importData(){
+    public static void importData(String tableName, String filePath, Connection connection){
         //将用户输入的数据，更新到数据库中
-        
+        try (FileInputStream fileInputStream = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fileInputStream)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+
+            // 准备更新语句
+            String updateStatement = "UPDATE " + tableName + " SET "
+                    + "income_statement_index = ?, "
+                    + "income_statement_value = ?, "
+                    + "balance_sheet_index = ?, "
+                    + "balance_sheet_value = ?, "
+                    + "cashflow_index = ?, "
+                    + "cashflow_value = ? "
+                    + "WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(updateStatement);
+
+            boolean flag = false;
+            boolean flag1 = false;
+            boolean flag2 = false;
+            int rowIndex;
+            // 遍历Excel表格行
+            for (Row row : sheet) {
+                rowIndex = row.getRowNum();
+                Cell indexCell = row.getCell(0);
+                Cell valueCell = row.getCell(1);
+
+                if (indexCell != null && valueCell != null && rowIndex >= 3) {
+
+                    String index = indexCell.getStringCellValue();
+                    switch (index) {
+                        case "Income Statement" -> {
+                            flag = true;
+                            continue;
+                        }
+                        case "Balance Sheet" -> {
+                            flag = false;
+                            flag1 = true;
+                            continue;
+                        }
+                        case "Cash Flow" -> {
+                            flag1 = false;
+                            flag2 = true;
+                            continue;
+                        }
+                    }
+                    double value = valueCell.getNumericCellValue();
+
+
+                    if (flag){
+                        // 设置更新语句参数
+                        preparedStatement.setString(1, index);
+                        preparedStatement.setDouble(2, value);
+                        preparedStatement.setString(3, null);
+                        preparedStatement.setString(4, null);
+                        preparedStatement.setString(5, null);
+                        preparedStatement.setString(6, null);
+                        rowIndex -= 3;
+                        preparedStatement.setInt(7, rowIndex);
+
+                        // 执行更新
+                        preparedStatement.executeUpdate();
+                    } else if (flag1) {
+                        // 设置更新语句参数
+                        preparedStatement.setString(1, null);
+                        preparedStatement.setString(2, null);
+                        preparedStatement.setString(3, index);
+                        preparedStatement.setDouble(4, value);
+                        preparedStatement.setString(5, null);
+                        preparedStatement.setString(6, null);
+                        rowIndex -= 4;
+                        preparedStatement.setInt(7, rowIndex);
+
+                        // 执行更新
+                        preparedStatement.executeUpdate();
+
+                    } else if (flag2) {
+                        // 设置更新语句参数
+                        preparedStatement.setString(1, null);
+                        preparedStatement.setString(2, null);
+                        preparedStatement.setString(3, null);
+                        preparedStatement.setString(4, null);
+                        preparedStatement.setString(5, index);
+                        preparedStatement.setDouble(6, value);
+                        rowIndex -= 5;
+                        preparedStatement.setInt(7, rowIndex);
+
+                        // 执行更新
+                        preparedStatement.executeUpdate();
+                    }
+                }
+            }
+
+            // 关闭预处理语句
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

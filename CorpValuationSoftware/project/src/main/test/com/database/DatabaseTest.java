@@ -34,8 +34,6 @@ public class DatabaseTest {
                     System.out.println(tableName);
                 }
 
-
-
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
