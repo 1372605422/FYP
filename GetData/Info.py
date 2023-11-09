@@ -62,12 +62,16 @@ class YFinance:
         #                  "indexTrend,"
         #                  "defaultKeyStatistics")
 
-        yahoo_modules = ("summaryDetail," 
-                         "financialData," 
-                         "indexTrend," 
-                         "quoteType," 
-                         "assetProfile,"
-                         "defaultKeyStatistics")
+        # yahoo_modules = ("summaryDetail,"
+        #                  "financialData,"
+        #                  "indexTrend,"
+        #                  "quoteType,"
+        #                  "assetProfile,"
+        #                  "defaultKeyStatistics")
+
+        yahoo_modules = (    "indexTrend,"
+                             "quoteType,"
+                             "assetProfile,")
 
         url = ("https://query1.finance.yahoo.com/v10/finance/"
                f"quoteSummary/{self.yahoo_ticker}"
