@@ -43,9 +43,21 @@ public class Search {
         return statement.executeQuery(sql);
     }
 
-    public static int searchOline(){
-        //TODO 等python文件封装好后，再写
-        return 1;
+    public static int searchOnline(String path) throws IOException, InterruptedException {
+        // 使用 ProcessBuilder 构建执行命令
+        ProcessBuilder processBuilder = new ProcessBuilder(path);
+
+        // 启动进程
+        Process process = processBuilder.start();
+
+        // 等待进程执行完成
+        int exitCode = process.waitFor();
+
+        if (exitCode == 0){
+            return 0;
+        }else {
+            return 1;
+        }
     }
 
     //调用info显示到database页面
@@ -173,6 +185,26 @@ public class Search {
             e.printStackTrace();
         }
 
+    }
+
+    public static String  checkCol(Connection conn,String  ticker){
+        try {
+            Statement statement = conn.createStatement();
+            String sql = "SELECT * FROM " + ticker;
+            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            for (int i = 1; i <= columnCount; i++) {
+                String columnName = metaData.getColumnName(i);
+                if (columnName.equals("underlyingSymbol")){
+                    return resultSet.getString("underlyingSymbol");
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
     }
 
    public static String copySheet(String name, String savePath){

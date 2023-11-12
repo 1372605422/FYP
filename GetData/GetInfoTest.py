@@ -42,11 +42,15 @@ with open('config/config.json') as f:
     config = json.load(f)
 
 table_name = config['Ticker']
-table_name_info = table_name + "info"
+
+# when longName meet first space, it will be split into two parts
+longName1 = longName.replace(" ", "_")
+# delete the dot in longName
+longName1 = longName.replace(".", "")
 
 # 创建表格
 cursor.execute(f'''
-    CREATE TABLE IF NOT EXISTS {table_name_info} (
+    CREATE TABLE IF NOT EXISTS {longName1} (
         country TEXT,
         industry TEXT,
         sector TEXT,
@@ -58,7 +62,7 @@ cursor.execute(f'''
 
 # 插入数据
 insert_query = f'''
-    INSERT INTO {table_name_info} (country, industry, sector, longBusinessSummary, underlyingSymbol, longName)
+    INSERT INTO {longName1} (country, industry, sector, longBusinessSummary, underlyingSymbol, longName)
     VALUES (?, ?, ?, ?, ?, ?)
 '''
 

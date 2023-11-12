@@ -6,6 +6,7 @@ import com.back.example.OutPutMethod;
 import com.database.FileUtils;
 import com.database.Search;
 import com.leewyatt.rxcontrols.controls.RXLineButton;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -222,6 +223,8 @@ public class Controller {
 
     public RXLineButton DatabaseSearchButton;
     public ComboBox TickerComboBox;
+    public Text DataBaseProfile;
+    public Text DataBaseName;
 
     //    tab页面
     @FXML
@@ -1277,6 +1280,7 @@ public class Controller {
     List<String> tables;
     ObservableList<String> observableTables;
     ResultSet resultSet;
+    ResultSet resultSetInfo;
     String osName = System.getProperty("os.name");
 
     //链接数据库
@@ -1300,9 +1304,35 @@ public class Controller {
     //将用户输入查询数据库
     public void DatabaseSearch() throws SQLException {
         String ticker = TickerComboBox.getEditor().getText();
+        String underlyingSymbol = Search.checkCol(conn, ticker);
+
+
+        if (underlyingSymbol != null){
+            String temp = underlyingSymbol;
+            underlyingSymbol = ticker;
+            ticker = temp;
+        }
+
         if (tables.contains(ticker)){
             //查询数据，并保存到一个list中
             resultSet = Search.searchTable(conn, ticker);
+
+
+            if (underlyingSymbol == null){
+                while (resultSet.next()) {
+                    underlyingSymbol = resultSet.getString("long_name");
+                }
+            }
+
+
+            resultSetInfo = Search.searchTable(conn, underlyingSymbol);
+
+            String longName = resultSetInfo.getString("longName");
+            DataBaseName.setText(longName);
+
+
+            String longBusinessSummary = resultSetInfo.getString("longBusinessSummary");
+            DataBaseProfile.setText(longBusinessSummary);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Message");
@@ -1310,7 +1340,7 @@ public class Controller {
             alert.show();
 
             B2.setText(ticker);
-        } else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("WARNING");
             alert.setHeaderText("Data miss!");
@@ -1325,26 +1355,34 @@ public class Controller {
             customButton.setOnAction(e -> {
                 // 网上搜索并导入到数据中
                 String onlineTicker = TickerComboBox.getEditor().getText();
-                if (Objects.equals(onlineTicker, "")){
-                    Alert alert1 = new Alert(Alert.AlertType.WARNING);
-                    alert1.setTitle("WARNING");
-                    alert1.setHeaderText("Empty Data or wrong ticker!");
-                    alert1.setContentText("Please enter a correct Ticker!");
-                    alert.close();
-                    alert1.show();
-                }else{
-                    String filePath = "GetData/config/config.json";
-                    FileUtils.writeFile(filePath,onlineTicker);
-                    int exitcode = Search.searchOline();
-                    if (exitcode != 0){
+                String filePath = "GetData/config/config.json";
+                FileUtils.writeFile(filePath, onlineTicker);
+
+                String script = "GetData/dist/GetFinanceData/GetFinanceData";
+
+                int exitcode;
+
+                try {
+                    exitcode = Search.searchOnline(script);
+                } catch (IOException | InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                Platform.runLater(() -> {
+                    if (exitcode != 0) {
                         Alert alert1 = new Alert(Alert.AlertType.WARNING);
                         alert1.setTitle("WARNING");
                         alert1.setHeaderText("Empty Data or wrong ticker!");
                         alert1.setContentText("Please enter a correct Ticker!");
                         alert.close();
                         alert1.show();
+                    } else {
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setTitle("Message");
+                        alert2.setHeaderText("Data found!");
+                        alert2.show();
                     }
-                }
+                });
             });
 
 
@@ -1478,4 +1516,16 @@ public class Controller {
         alert.show();
     }
 
+    public void DataBaseComboBox() {
+        String searchText = TickerComboBox.getEditor().getText().toLowerCase();
+        ObservableList<String> filteredItems = FXCollections.observableArrayList();
+
+        for (String item : observableTables) {
+            if (item.toLowerCase().contains(searchText)) {
+                filteredItems.add(item);
+            }
+        }
+
+        TickerComboBox.setItems(filteredItems);
+    }
 }
