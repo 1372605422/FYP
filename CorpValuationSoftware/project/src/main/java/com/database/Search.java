@@ -2,9 +2,7 @@ package com.database;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,8 +11,9 @@ import java.util.Objects;
 
 
 public class Search {
+    // 获取 Logger
 
-    //TODO 查现有的表，先查表，如果现有的表中没有，先返回弹窗，询问是否需要从网络中下载。如果需要，则调用py程序download
+
     //将现存的表加入到下拉菜单中
     public static List<String> getDataTable(Connection conn) throws SQLException {
         // 执行查询语句
@@ -49,6 +48,23 @@ public class Search {
 
         // 启动进程
         Process process = processBuilder.start();
+
+        // 读取标准输出流
+        InputStream inputStream = process.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            // 处理标准输出，如果需要的话
+            System.out.println("Standard Output: " + line);
+        }
+
+        // 读取错误输出流
+        InputStream errorStream = process.getErrorStream();
+        BufferedReader errorReader = new BufferedReader(new InputStreamReader(errorStream));
+        while ((line = errorReader.readLine()) != null) {
+            // 打印错误输出到控制台
+            System.out.println("Error Output: " + line);
+        }
 
         // 等待进程执行完成
         int exitCode = process.waitFor();
@@ -89,8 +105,14 @@ public class Search {
                 double balanceSheetValue = resultSet.getDouble("balance_sheet_value");
                 String cashFlowIndex = resultSet.getString("cashflow_index");
                 double cashFlowValue = resultSet.getDouble("cashflow_value");
-                String priceIndex = resultSet.getString("current_price");
+                String priceIndex = resultSet.getString("current_price_value");
 
+                if (priceIndex != null){
+                    try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+                        workbook.write(fileOutputStream);
+                    }
+                    return;
+                }
 
                 if (Objects.equals(balanceSheetIndex, null) && Objects.equals(cashFlowIndex, null)) {
                     if (flag){
@@ -108,9 +130,7 @@ public class Search {
                         cell.setCellValue(value);
 
                         flag = false;
-                    } else if (Objects.equals(priceIndex, "current_price")) {
-                        break;
-                    } else {
+                    }  else {
                     // 写入income statement
                         cell = row.createCell(0);
                         cell.setCellValue(columnName);
@@ -144,8 +164,8 @@ public class Search {
                         cell.setCellValue(balanceSheetValue);
                     }
                 } else if (Objects.equals(columnName, null) && Objects.equals(balanceSheetIndex, null)) {
+                    cell = row.createCell(0);
                     if (flag2){
-                        cell = row.createCell(0);
                         cell.setCellValue("Cash Flow");
                         cell = row.createCell(1);
                         cell.setCellValue("");
@@ -160,7 +180,6 @@ public class Search {
 
                         flag2 = false;
                     }else {
-                        cell = row.createCell(0);
                         cell.setCellValue(cashFlowIndex);
 
                         cell = row.createCell(1);
@@ -174,11 +193,6 @@ public class Search {
                 if (row == null) {
                     row = sheet.createRow(rowOne);
                 }
-            }
-
-            // 保存修改后的文件
-            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
-                workbook.write(fileOutputStream);
             }
 
         } catch (Exception e) {
@@ -200,8 +214,8 @@ public class Search {
                     return resultSet.getString("underlyingSymbol");
                 }
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException t) {
+            System.out.println("No such table");
         }
 
         return null;

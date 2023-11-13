@@ -12,6 +12,7 @@ module com.front {
     requires rxcontrols;
     requires org.apache.poi.ooxml;
 
+
     opens com.front to javafx.fxml;
     exports com.front;
     exports com.back.example.CostOfCapital;

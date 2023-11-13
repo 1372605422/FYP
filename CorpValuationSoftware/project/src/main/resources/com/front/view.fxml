@@ -989,7 +989,7 @@
             </TabPane>
             <Pane fx:id="DatabasePane" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <GridPane alignment="CENTER" hgap="10.0" layoutX="34.0" prefHeight="497.0" prefWidth="526.0">
+                  <GridPane alignment="CENTER" hgap="10.0" layoutX="34.0" prefHeight="356.0" prefWidth="526.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.73274230957031" minWidth="10.0" prefWidth="102.16459655761719" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="324.738037109375" minWidth="10.0" prefWidth="310.56195068359375" />
@@ -999,10 +999,6 @@
                       <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="124.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
@@ -1015,10 +1011,6 @@
                               <Font size="18.0" />
                            </font></Text>
                         <ComboBox fx:id="TickerComboBox" editable="true" onKeyReleased="#DataBaseComboBox" prefHeight="26.0" prefWidth="286.0" promptText="Please input a ticker" GridPane.columnIndex="1" />
-                        <Text fx:id="DataBaseProfile" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="423.21630859375" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="16.0" />
-                           </font></Text>
                         <RXLineButton fx:id="DatabaseSearchButton" onMouseClicked="#DatabaseSearch" text="Search" GridPane.columnIndex="2" />
                         <RXLineButton onMouseClicked="#DatabaseLoad" text="Load" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <RXLineButton onMouseClicked="#DatabaseDownload" text="Export" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -1030,6 +1022,19 @@
                         </Text>
                      </children>
                   </GridPane>
+                  <ScrollPane layoutX="32.0" layoutY="173.0" prefHeight="455.0" prefWidth="437.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="846.0" prefWidth="420.0">
+                           <children>
+                              <Text fx:id="DataBaseProfile" layoutX="-2.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="423.21630859375" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
                </children></Pane>
             <Pane fx:id="MLPane" prefHeight="200.0" prefWidth="200.0" visible="false" />
          </children>

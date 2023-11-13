@@ -32,7 +32,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import netscape.javascript.JSObject;
-
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -49,6 +48,7 @@ public class Controller {
     /*
      * b标签与a标签一一对应
      * 日期行业等先不用输入，只输入数据相关*/
+
     public static String B19Result;
     public DatePicker B1;
     public TextField B2;
@@ -812,9 +812,7 @@ public class Controller {
                     String script1;
                     try {
                         script1 = new String(Files.readAllBytes(Paths.get(url1.toURI())));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (URISyntaxException e) {
+                    } catch (IOException | URISyntaxException e) {
                         throw new RuntimeException(e);
                     }
 
@@ -1283,6 +1281,7 @@ public class Controller {
     ResultSet resultSetInfo;
     String osName = System.getProperty("os.name");
 
+
     //链接数据库
     {
         try {
@@ -1302,94 +1301,132 @@ public class Controller {
     }
 
     //将用户输入查询数据库
-    public void DatabaseSearch() throws SQLException {
-        String ticker = TickerComboBox.getEditor().getText();
-        String underlyingSymbol = Search.checkCol(conn, ticker);
+    public void DatabaseSearch() {
+            String ticker = TickerComboBox.getEditor().getText();
+            String underlyingSymbol = Search.checkCol(conn, ticker);
 
 
-        if (underlyingSymbol != null){
-            String temp = underlyingSymbol;
-            underlyingSymbol = ticker;
-            ticker = temp;
-        }
-
-        if (tables.contains(ticker)){
-            //查询数据，并保存到一个list中
-            resultSet = Search.searchTable(conn, ticker);
-
-
-            if (underlyingSymbol == null){
-                while (resultSet.next()) {
-                    underlyingSymbol = resultSet.getString("long_name");
-                }
+            if (underlyingSymbol != null) {
+                String temp = underlyingSymbol;
+                underlyingSymbol = ticker;
+                ticker = temp;
             }
 
-
-            resultSetInfo = Search.searchTable(conn, underlyingSymbol);
-
-            String longName = resultSetInfo.getString("longName");
-            DataBaseName.setText(longName);
-
-
-            String longBusinessSummary = resultSetInfo.getString("longBusinessSummary");
-            DataBaseProfile.setText(longBusinessSummary);
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText("Data found!");
-            alert.show();
-
-            B2.setText(ticker);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("WARNING");
-            alert.setHeaderText("Data miss!");
-            alert.setContentText("Query data does not exist in the database, do you want to do a web search?");
-            ButtonType customButtonType = new ButtonType("Search Online");
-            ButtonType cancelButtonType = ButtonType.CANCEL;
-
-            alert.getButtonTypes().setAll(customButtonType, cancelButtonType);
-
-            DialogPane dialogPane = alert.getDialogPane();
-            Button customButton = (Button) dialogPane.lookupButton(customButtonType);
-            customButton.setOnAction(e -> {
-                // 网上搜索并导入到数据中
-                String onlineTicker = TickerComboBox.getEditor().getText();
-                String filePath = "GetData/config/config.json";
-                FileUtils.writeFile(filePath, onlineTicker);
-
-                String script = "GetData/dist/GetFinanceData/GetFinanceData";
-
-                int exitcode;
-
+            if (tables.contains(ticker)) {
                 try {
-                    exitcode = Search.searchOnline(script);
-                } catch (IOException | InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                    //查询数据，并保存到一个list中
+                    resultSet = Search.searchTable(conn, ticker);
 
-                Platform.runLater(() -> {
-                    if (exitcode != 0) {
-                        Alert alert1 = new Alert(Alert.AlertType.WARNING);
-                        alert1.setTitle("WARNING");
-                        alert1.setHeaderText("Empty Data or wrong ticker!");
-                        alert1.setContentText("Please enter a correct Ticker!");
-                        alert.close();
-                        alert1.show();
-                    } else {
-                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                        alert2.setTitle("Message");
-                        alert2.setHeaderText("Data found!");
-                        alert2.show();
+
+                    if (underlyingSymbol == null) {
+                        while (resultSet.next()) {
+                            underlyingSymbol = resultSet.getString("long_name");
+                        }
                     }
+
+                    // Close the current ResultSet
+                    resultSet.close();
+
+                    // Execute the query again to get a new ResultSet
+                    resultSet = Search.searchTable(conn, ticker);
+
+                    resultSetInfo = Search.searchTable(conn, underlyingSymbol);
+
+                    String longName = resultSetInfo.getString("longName");
+                    DataBaseName.setText(longName);
+
+
+                    String longBusinessSummary = resultSetInfo.getString("longBusinessSummary");
+                    DataBaseProfile.setText(longBusinessSummary);
+
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Message");
+                    alert.setHeaderText("Data found!");
+                    alert.show();
+
+                    B2.setText(ticker);
+                } catch (SQLException e) {
+                    System.out.println("Empty Data or wrong ticker!");
+                }
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("WARNING");
+                alert.setHeaderText("Data miss!");
+                alert.setContentText("Query data does not exist in the database, do you want to do a web search?");
+                ButtonType customButtonType = new ButtonType("Search Online");
+                ButtonType cancelButtonType = ButtonType.CANCEL;
+
+                alert.getButtonTypes().setAll(customButtonType, cancelButtonType);
+
+                DialogPane dialogPane = alert.getDialogPane();
+                Button customButton = (Button) dialogPane.lookupButton(customButtonType);
+                customButton.setOnAction(e -> {
+                    // 网上搜索并导入到数据中
+                    String onlineTicker = TickerComboBox.getEditor().getText();
+                    String filePath = "GetData/config/config.json";
+                    FileUtils.writeFile(filePath, onlineTicker);
+
+                    String script = "GetData/dist/GetFinanceData/GetFinanceData";
+
+                    int exitcode;
+
+                    try {
+                        exitcode = Search.searchOnline(script);
+                    } catch (IOException | InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    Platform.runLater(() -> {
+                        if (exitcode != 0) {
+                            Alert alert1 = new Alert(Alert.AlertType.WARNING);
+                            alert1.setTitle("WARNING");
+                            alert1.setHeaderText("Empty Data or wrong ticker!");
+                            alert1.setContentText("Please enter a correct Ticker!");
+                            alert.close();
+                            alert1.show();
+
+                        } else {
+                            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                            alert2.setTitle("Message");
+                            alert2.setHeaderText("Data found!");
+                            alert2.show();
+
+                            // 获取 OK 按钮
+                            ButtonType okButtonType = ButtonType.OK;
+                            Button okButton = (Button) alert2.getDialogPane().lookupButton(okButtonType);
+
+                            // 添加点击事件
+                            okButton.setOnAction(actionEvent -> {
+                                // 在这里添加 OK 按钮点击事件的处理代码
+                                // 例如，关闭当前对话框
+
+                                try {
+                                    conn.close();
+                                    conn = DriverManager.getConnection("jdbc:sqlite:FinanceData.db");
+                                    tables = Search.getDataTable(conn);
+                                    tables.sort(new Comparator<String>() {
+                                        @Override
+                                        public int compare(String s1, String s2) {
+                                            return Character.compare(s1.charAt(0), s2.charAt(0));
+                                        }
+                                    });
+
+                                    observableTables = FXCollections.observableArrayList(tables);
+                                    TickerComboBox.setItems(observableTables);
+
+                                } catch (SQLException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            });
+                        }
+                    });
                 });
-            });
 
 
-            alert.show();
-        }
-
+                alert.show();
+            }
     }
+
 
 
     //将数据加载到计算界面
@@ -1497,7 +1534,16 @@ public class Controller {
 
         File selectedDirectory = directoryChooser.showDialog(new Stage());
 
-        if (selectedDirectory != null & resultSet != null) {
+        if (resultSet == null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("WARNING");
+            alert.setHeaderText("Data miss!");
+            alert.setContentText("Please select the company you want to search for!");
+            alert.show();
+            return;
+        }
+
+        if (selectedDirectory != null) {
             String folderPath = selectedDirectory.getAbsolutePath();
             String ticker = TickerComboBox.getEditor().getText();
             Search.downloadData(ticker,folderPath, resultSet);
@@ -1528,4 +1574,5 @@ public class Controller {
 
         TickerComboBox.setItems(filteredItems);
     }
+
 }
