@@ -23,32 +23,18 @@ import static com.back.StaticData.InputData.yearOfList;
  * Generates a PDF report that contains various elements such as paragraphs, lines, tables,
  * images, links, and watermarks.
  *
- * @param document The document to write the PDF report to.
  * @throws Exception If there is an error while generating the PDF report.
- * @author [Keyi Liu]
+ * @author [Keyi Liu, Zihao Zhang]
  * @version [2]
  */
 
 
 public class PdfReport {
 
-    // 
-    public static void main(String[] args) throws Exception {
-        // 
-        Document document = new Document(PageSize.A4);//
-
-        // 
-        String str = "PDFDemo2";
-        File file = new File(str + ".pdf");
-        file.createNewFile();
-        setMain(file, document);
-    }
-
     public static void setMain(File file, Document document) {
         try {
 
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
-            writer.setPageEvent(new Watermark("GRP14"));// 
             writer.setPageEvent(new MyHeaderFooter());// 
 
             document.open();
@@ -133,7 +119,7 @@ public class PdfReport {
         costOfCapital.setTerminalostOfCapital(inputData.isB41(), inputData.getB42(), inputData.isB57(), inputData.getB58(), cerp.getB1(), inputData.getB30());
 
         A40ROIC roic = new A40ROIC();
-        roic.setTerminaLROIC(inputData.isB44(), inputData.getB45(), costOfCapital);
+        roic.setTerminaLROIC(inputData.isB44(), InputData.getB45(), costOfCapital);
 
 
         A8Reinvestment reinvestment = new A8Reinvestment();
@@ -246,18 +232,14 @@ public class PdfReport {
         Anchor gotoP = new Anchor("goto");
         gotoP.setReference("#top");
 
-        // 
-        /*Image image = Image.getInstance("facebook_cover_photo_1.png");
-        image.setAlignment(Image.ALIGN_CENTER);
-        image.scalePercent(8); //
-        image.setAlignment(0);
-*/
+        //
+
 
         BigDecimal bd;
         String v;
 
         // 
-        PdfPTable table = createTable(new float[]{120, 80, 80, 80, 40, 80, 80});
+        PdfPTable table = createTable(new float[]{120, 80, 120, 80, 40, 80, 40});
         table.addCell(createCell("The Assumptions", headfont, Element.ALIGN_LEFT, 7, false));
         //table.setSpacingBefore(30f); //
         table.addCell(createCell("", keyfont, Element.ALIGN_CENTER));
@@ -266,7 +248,7 @@ public class PdfReport {
         table.addCell(createCell("Years 6-10", keyfont, Element.ALIGN_CENTER));
         table.addCell(createCell("", keyfont, Element.ALIGN_CENTER));
         table.addCell(createCell("After year 10", keyfont, Element.ALIGN_CENTER));
-        table.addCell(createCell("Link to story", keyfont, Element.ALIGN_CENTER));
+        table.addCell(createCell("Story", keyfont, Element.ALIGN_CENTER));
 
 
         table.addCell(createCell("Revenues (a)", textfont));
@@ -466,12 +448,12 @@ public class PdfReport {
         paragraph2.setSpacingBefore(100f); //
         paragraph2.setSpacingAfter(10f); //
 
-        //input todo
+        //input
         PdfPTable table4 = createTable(new float[]{320, 240});
         table4.addCell(createCell("Date of valuation", keyfont));
-        table4.addCell(createCell(" ", textfont));
+        table4.addCell(createCell(InputData.getDate(), textfont));
         table4.addCell(createCell("Company name", keyfont));
-        table4.addCell(createCell(" ", textfont));
+        table4.addCell(createCell(InputData.getCompanyName(), textfont));
 
         PdfPTable table5 = createTable(new float[]{320, 240});
         table5.setSpacingBefore(10f); //
@@ -480,11 +462,9 @@ public class PdfReport {
         table5.addCell(createCell("This year", keyfont));
 
         table5.addCell(createCell("Country", textfont));
-        table5.addCell(createCell("", keyfont));
+        table5.addCell(createCell(InputData.getCountry(), textfont));
         table5.addCell(createCell("Industry", textfont));
-        table5.addCell(createCell("", keyfont));
-        table5.addCell(createCell("Industry (Global)", textfont));
-        table5.addCell(createCell("", keyfont));
+        table5.addCell(createCell(InputData.getIndustry(), textfont));
         table5.addCell(createCell("Revenues", textfont));
         table5.addCell(createCell(String.valueOf(InputData.getB8()), textfont));
         table5.addCell(createCell("Operating income or EBIT", textfont));
@@ -544,7 +524,7 @@ public class PdfReport {
         table7.addCell(createCell("Riskfree rate", textfont));
         v=isPercentage(InputData.getB30());
         table7.addCell(createCell(v, textfont));
-        table7.addCell(createCell("Riskfree rate", textfont));
+        table7.addCell(createCell("Initial cost of capital", textfont));
         v=isPercentage(InputData.getB31());
         table7.addCell(createCell(v, textfont));
 

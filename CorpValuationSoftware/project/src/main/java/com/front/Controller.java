@@ -37,10 +37,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -66,7 +63,6 @@ public class Controller {
     public CheckBox B13Yes;
     public CheckBox B13No;
     public TextField B21;
-    public TextField B24;
 //    public TextField B25;
     public TextField B26;
 //    public TextField B27;
@@ -129,7 +125,6 @@ public class Controller {
     public TextField nextYearGrowthRate;
     public TextField growthRateUpToN;
     public TextField finalYearGrowthRate;
-    public TextField FinalYearCapitalRatio;
     public TextField capitalRatioUptoN;
     public Button ChartOpenForCapitalRatio;
 
@@ -225,6 +220,8 @@ public class Controller {
     public ComboBox TickerComboBox;
     public Text DataBaseProfile;
     public Text DataBaseName;
+    public TextField country;
+    public TextField industry;
 
     //    tab页面
     @FXML
@@ -236,8 +233,6 @@ public class Controller {
 
 
 
-    @FXML
-    private ComboBox<String> comboBox1;
 
     @FXML
     private void B13CheckYes() {
@@ -252,23 +247,7 @@ public class Controller {
         LocalDate currentDate = LocalDate.now();
         B1.setValue(currentDate);
 
-        comboBox1.getItems().addAll(
-                "United States",
-                "United Kingdom",
-                "China",
-                "Denmark",
-                "Japan","HongKong");
 
-
-
-
-        /*
-        ObservableList<String> observableList = FXCollections.observableArrayList("111", "222", "333");
-        comboCoC1.setItems(observableList);
-         */
-
-        comboBox1.getItems().addAll("United States", "United Kingdom", "China", "Denmark", "Japan","HongKong");
-//        comboBox4.getItems().addAll("United States", "United Kingdom", "China", "Denmark", "Japan","HongKong");
         comboCoC1.getItems().addAll("Direct input","Single Business(US)","Single Business(Global)");
         comboCoC2.getItems().addAll("Will input", "Country of incorporation");
         comboCoC3.getItems().addAll("Direct input", "Actual rating", "Synthetic rating");
@@ -313,7 +292,7 @@ public class Controller {
     @FXML
     void result(ActionEvent event) {
         //submit 按钮进行读入 后进行计算
-//        try {
+
             InputData.setB8(Double.parseDouble(B8.getText()));
             InputData.setB9(Double.parseDouble(B9.getText()));
             InputData.setB10(Double.parseDouble(B10.getText()));
@@ -330,13 +309,8 @@ public class Controller {
             InputData.setB21(isPercentage(B21.getText()));
 
 
-            InputData.setB24(isPercentage(B24.getText()));
-//            InputData.setB25(isPercentage(B25.getText()));
+            InputData.setB24(isPercentage("0"));
             InputData.setB26(isPercentage(B26.getText()));
-//            InputData.setB27(Double.parseDouble(B27.getText()));
-//            InputData.setB28(Double.parseDouble(B28.getText()));
-
-//            InputData.setB30(isPercentage(B30.getText()));
             InputData.setB31(isPercentage(B31.getText()));
 
             InputData.setB34(Double.parseDouble(B34.getText()));
@@ -362,19 +336,46 @@ public class Controller {
             InputData.setB64(Double.parseDouble(B64.getText()));
             InputData.setB65(isPercentage(B65.getText()));
 
+            InputData.setDate(String.valueOf(B1.getValue()));
+            InputData.setCountry(String.valueOf(country.getText()));
+            InputData.setCompanyName(String.valueOf(B2.getText()));
+            InputData.setIndustry(String.valueOf(industry.getText()));
 
-        Parent root;
-        try {
-            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("result.fxml")));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
-            Scene scene = new Scene(root, 1096, 742);
-            stage.setTitle("Result");
-            stage.setScene(scene);
-            stage.show();
+
+
+            HashMap<String, Object> resultSetMap = new HashMap<>();
+            try {
+                ResultSetMetaData metaData = resultSetInfo.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                // Iterate over the ResultSet and store each column value in the map
+                while (resultSetInfo.next()) {
+                    for (int i = 1; i <= columnCount; i++) {
+                        String columnName = metaData.getColumnName(i);
+                        Object columnValue = resultSetInfo.getObject(i);
+                        resultSetMap.put(columnName, columnValue);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            Parent root;
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("result.fxml")));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Stage stage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
+                Scene scene = new Scene(root, 1096, 742);
+                stage.setTitle("Result");
+                stage.setScene(scene);
+                stage.setUserData(resultSetMap);
+                stage.show();
     }
+
+
 
 
     public void B13CheckNo() {
@@ -706,7 +707,7 @@ public class Controller {
 
     public void openNewWindowForCaptialRatio() {
         nextYearForCapitalRatio = Double.parseDouble(captialRatioForNextYear.getText());
-        finalYearForCapitalRatio = Double.parseDouble(FinalYearCapitalRatio.getText());
+        finalYearForCapitalRatio = Double.parseDouble("0");
         System.out.println(finalYearForCapitalRatio);
         upToNYearForCapitalRatio = Integer.parseInt(capitalRatioUptoN.getText());
 
@@ -1344,7 +1345,6 @@ public class Controller {
                     alert.setHeaderText("Data found!");
                     alert.show();
 
-                    B2.setText(ticker);
                 } catch (SQLException e) {
                     System.out.println("Empty Data or wrong ticker!");
                 }
@@ -1431,6 +1431,7 @@ public class Controller {
 
     //将数据加载到计算界面
     public void DatabaseLoad() throws SQLException {
+        B2.clear();
         B8.clear();
         B9.clear();
         B10.clear();
@@ -1441,6 +1442,8 @@ public class Controller {
         B18.clear();
         B19.clear();
         B20.clear();
+        country.clear();
+        industry.clear();
 
         if (resultSet == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -1451,6 +1454,15 @@ public class Controller {
             return;
         }
 
+        String c = resultSetInfo.getString("country");
+        String i = resultSetInfo.getString("industry");
+        String b = resultSetInfo.getString("longName");
+
+        country.setText(c);
+        industry.setText(i);
+        B2.setText(b);
+
+
         double totalAssets = 0.0;
 
         while (resultSet.next()) {
@@ -1458,9 +1470,6 @@ public class Controller {
             double value = resultSet.getDouble("income_statement_value");
             String balanceSheetIndex = resultSet.getString("balance_sheet_index");
             double balanceSheetValue = resultSet.getDouble("balance_sheet_value");
-            //cashFlow table 暂时不用
-//            String cashFlowIndex = resultSet.getString("cashflow_index");
-//            double cashFlowValue = resultSet.getDouble("cashflow_value");
 
             String currentPrice = resultSet.getString("current_price");
             double currentPriceValue = resultSet.getDouble("current_price_value");

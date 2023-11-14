@@ -176,6 +176,45 @@ public class InputData {
         return B19;
     }
 
+
+    static String companyName = "Apple";
+    static String industry = "Technology";
+    static String date = "2019-12-31";
+
+    public static String getCompanyName() {
+        return companyName;
+    }
+
+    public static void setCompanyName(String companyName) {
+        InputData.companyName = companyName;
+    }
+
+    public static String getIndustry() {
+        return industry;
+    }
+
+    public static void setIndustry(String industry) {
+        InputData.industry = industry;
+    }
+
+    public static String getDate() {
+        return date;
+    }
+
+    public static void setDate(String data) {
+        InputData.date = data;
+    }
+
+    public static String getCountry() {
+        return country;
+    }
+
+    public static void setCountry(String country) {
+        InputData.country = country;
+    }
+
+    static String country = "USA";
+
     static boolean B52 = false;
     static double B16;
     static double B19 = (double) 127.68;

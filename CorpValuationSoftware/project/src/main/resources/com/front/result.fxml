@@ -14,11 +14,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="773.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.front.Result">
+<AnchorPane prefHeight="773.0" prefWidth="1096.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.front.Result">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="742.0" prefWidth="1096.0">
          <children>
-            <Text fx:id="CompanyName_id" strokeType="OUTSIDE" strokeWidth="0.0" text="Boeing" wrappingWidth="67.098120088212">
+            <Text fx:id="CompanyName_id" strokeType="OUTSIDE" strokeWidth="0.0" text="Boeing" textAlignment="CENTER" wrappingWidth="254.098120088212">
                <font>
                   <Font name="AppleMyungjo Regular" size="22.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Font name="AppleMyungjo Regular" size="14.0" />
                </font>
             </Text>
-            <TextArea prefHeight="88.0" prefWidth="954.0" promptText="Boeing is in deep trouble. Already exposed to significant pain because of its mishandling of the Boeing 737 Max, which caused revenues to plummet in 2019, the company is facing a mountain of pain with the Corona Virus decimating the airline business (Boeing's customers). I assume more pain the year to come, with revenues dropping even with the 737 Max returning to the fold and increased losses. After that, i assume that there will be higher growth, as airlines start playing catch up and buy more aircraft from a duopoly. I assume that margins will revert back to pre-2018 levels over the next 5 years and that during the next year, Boeing is exposed to a risk of failure, not so much because it will go out of business (it is too big to fail) but from needing a bailout from the government that is large enough to wipe out equity." />
+            <TextArea fx:id="Story_id" prefHeight="88.0" prefWidth="954.0" promptText="Boeing is in deep trouble. Already exposed to significant pain because of its mishandling of the Boeing 737 Max, which caused revenues to plummet in 2019, the company is facing a mountain of pain with the Corona Virus decimating the airline business (Boeing's customers). I assume more pain the year to come, with revenues dropping even with the 737 Max returning to the fold and increased losses. After that, i assume that there will be higher growth, as airlines start playing catch up and buy more aircraft from a duopoly. I assume that margins will revert back to pre-2018 levels over the next 5 years and that during the next year, Boeing is exposed to a risk of failure, not so much because it will go out of business (it is too big to fail) but from needing a bailout from the government that is large enough to wipe out equity." wrapText="true" />
             <Separator prefHeight="4.0" prefWidth="684.0" />
             <Text boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE" strokeWidth="0.0" text="The Assumptions" wrappingWidth="112.96289062500003">
                <font>

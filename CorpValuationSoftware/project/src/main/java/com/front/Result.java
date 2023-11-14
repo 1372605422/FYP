@@ -12,15 +12,20 @@ import com.back.example.OutPutMethod;
 import com.back.example.OutPutMethod2;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.back.example.PDF.PdfReport.setMain;
 
@@ -50,7 +55,6 @@ public class Result {
         public Text C9; //
         public Text D13;
         public Text D14;
-        public Text G13;
         public Text C23;
         public Text C22;
         public Text C21;
@@ -130,7 +134,7 @@ public class Result {
         public Text D36;
         public Text G33;
         public Text G39;
-        public Text Story_id;
+        public TextArea Story_id;
         public Text CompanyName_id;
         public Text B9;  //
         public Text D12;
@@ -479,7 +483,16 @@ public class Result {
                 E25.setText(isNegative(isRounded(outputEBIT1_tList.get(9))));
                 E26.setText(isNegative(isRounded(outputEBIT1_tList.get(10))));
                 E27.setText(isNegative(isRounded(outputEBIT1_tList.get(11))));
+                Story_id.setText("");
+                CompanyName_id.setText("");
 
+                Platform.runLater(() -> {
+                        Stage stage = (Stage) E27.getScene().getWindow();
+                        HashMap<String, Object> resultSetMap = (HashMap<String, Object>) stage.getUserData();
+
+                        Story_id.setText((String) resultSetMap.get("longBusinessSummary"));
+                        CompanyName_id.setText((String) resultSetMap.get("longName"));
+                });
         }
 
         private String  isNegative(int value) {
@@ -523,9 +536,13 @@ public class Result {
                 Document document = new Document(PageSize.A4);// 建立一个Document对象
 
                 // 2.建立一个书写器(Writer)与document对象关联
-                String str = "PDFDemo2";
+                String str = CompanyName_id.getText();
                 File file = new File(str + ".pdf");
-                file.createNewFile();
+                boolean newFile = file.createNewFile();
+                if (!newFile) {
+                        System.out.println("创建文件失败");
+                        return;
+                }
                 setMain(file, document);
                 System.out.println("Report success");
         }

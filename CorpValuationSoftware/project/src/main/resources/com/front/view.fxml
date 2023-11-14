@@ -27,7 +27,7 @@
    <center>
       <StackPane>
          <children>
-            <TabPane fx:id="tabPane" prefHeight="928.0" prefWidth="562.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+            <TabPane fx:id="tabPane" prefHeight="928.0" prefWidth="562.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="tab1" closable="false" text="Basic Input">
                      <content>
@@ -44,7 +44,6 @@
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.02703857421875" minWidth="2.514434814453125" prefWidth="79.61154174804688" />
                                              </columnConstraints>
                                              <rowConstraints>
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -85,7 +84,6 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <ComboBox id="CompanyName" fx:id="comboBox1" editable="true" prefHeight="23.0" prefWidth="177.0" promptText="US" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Text fx:id="text3" fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" wrappingWidth="241.6704559326172" GridPane.rowIndex="2">
                                                    <font>
                                                       <Font size="13.0" />
@@ -97,86 +95,78 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                              
-                                                                                                <ComboBox id="Industry" fx:id="comboBox2" editable="true" prefHeight="23.0" prefWidth="179.0" promptText="Air" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Text fx:id="text5" fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Industry (Global)" wrappingWidth="247.46026611328125" GridPane.rowIndex="4">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenues" wrappingWidth="247.0602569580078" GridPane.rowIndex="4">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <ComboBox id="Industry" fx:id="comboBox3" prefHeight="23.0" prefWidth="182.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenues" wrappingWidth="247.0602569580078" GridPane.rowIndex="5">
+                                                <TextField fx:id="B8" prefHeight="23.0" prefWidth="146.0" promptText="Enter revenues ($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="EBIT" wrappingWidth="241.37757873535156" GridPane.rowIndex="5">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B8" prefHeight="23.0" prefWidth="146.0" promptText="Enter revenues ($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="EBIT" wrappingWidth="241.37757873535156" GridPane.rowIndex="6">
+                                                <TextField fx:id="B9" prefHeight="24.0" prefWidth="146.0" promptText="Enter operating income($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Interest expense" wrappingWidth="232.26025390625" GridPane.rowIndex="6">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B9" prefHeight="24.0" prefWidth="146.0" promptText="Enter operating income($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Interest expense" wrappingWidth="232.26025390625" GridPane.rowIndex="7">
+                                                <TextField fx:id="B10" prefHeight="23.0" prefWidth="145.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Book value of equity" wrappingWidth="239.06027221679688" GridPane.rowIndex="7">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B10" prefHeight="23.0" prefWidth="145.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Book value of equity" wrappingWidth="239.06027221679688" GridPane.rowIndex="8">
+                                                <TextField fx:id="B11" prefHeight="23.0" prefWidth="188.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Book value of debt" wrappingWidth="212.968017578125" GridPane.rowIndex="8">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B11" prefHeight="23.0" prefWidth="188.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Book value of debt" wrappingWidth="212.968017578125" GridPane.rowIndex="9">
+                                                <TextField fx:id="B12" prefHeight="23.0" prefWidth="130.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="R&amp;D expense to capitialize?" wrappingWidth="257.71636962890625" GridPane.rowIndex="9">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B12" prefHeight="23.0" prefWidth="130.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="R&amp;D expense to capitialize?" wrappingWidth="257.71636962890625" GridPane.rowIndex="10">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Calibri" text="Cash and Marketable Securities" wrappingWidth="258.2602844238281" GridPane.rowIndex="10">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="Calibri" text="Cash and Marketable Securities" wrappingWidth="258.2602844238281" GridPane.rowIndex="11">
+                                                <TextField fx:id="B15" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Crossing holdings" wrappingWidth="236.26019287109375" GridPane.rowIndex="11">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B15" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Crossing holdings" wrappingWidth="236.26019287109375" GridPane.rowIndex="12">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Minority interests" wrappingWidth="252.6602020263672" GridPane.rowIndex="12">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Minority interests" wrappingWidth="252.6602020263672" GridPane.rowIndex="13">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of shares outstanding" wrappingWidth="244.26025390625" GridPane.rowIndex="13">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of shares outstanding" wrappingWidth="244.26025390625" GridPane.rowIndex="14">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Current stock price" wrappingWidth="245.8602294921875" GridPane.rowIndex="14">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Current stock price" wrappingWidth="245.8602294921875" GridPane.rowIndex="15">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Effective tax rate" wrappingWidth="248.66024780273438" GridPane.rowIndex="15">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Effective tax rate" wrappingWidth="248.66024780273438" GridPane.rowIndex="16">
-                                                   <font>
-                                                      <Font size="13.0" />
-                                                   </font>
-                                                </Text>
-                                                <TextField fx:id="B16" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                                                <TextField fx:id="B17" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-                                                <TextField fx:id="B18" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                                                <TextField fx:id="B19" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                                                <TextField fx:id="B20" promptText="\%" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-                                                <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10; -fx-padding: 3;" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                                <TextField fx:id="B16" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                                <TextField fx:id="B17" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                                <TextField fx:id="B18" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                                <TextField fx:id="B19" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                                <TextField fx:id="B20" promptText="\%" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                                <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10; -fx-padding: 3;" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                                    <children>
                                                       <CheckBox fx:id="B13Yes" mnemonicParsing="false" onAction="#B13CheckYes" text="Yes" textFill="#2fa2e0">
                                                          <font>
@@ -190,111 +180,109 @@
                                                       </CheckBox>
                                                    </children>
                                                 </HBox>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Marginal tax rate" wrappingWidth="247.46029663085938" GridPane.rowIndex="17">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Marginal tax rate" wrappingWidth="247.46029663085938" GridPane.rowIndex="16">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B21" prefHeight="36.0" prefWidth="163.0" promptText="\%" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue growth rate up to year n =" wrappingWidth="233.04023361206055" GridPane.rowIndex="18">
+                                                <TextField fx:id="B21" prefHeight="36.0" prefWidth="163.0" promptText="\%" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue growth rate up to year n =" wrappingWidth="233.04023361206055" GridPane.rowIndex="17">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue growth rate for next year" GridPane.rowIndex="19">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue growth rate for next year" GridPane.rowIndex="18">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue growth rate for the n year" wrappingWidth="239.36446380615234" GridPane.rowIndex="20">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Revenue growth rate for the n year" wrappingWidth="239.36446380615234" GridPane.rowIndex="19">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="grid" text="Operating Margin for next year" GridPane.rowIndex="21">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="grid" text="Operating Margin for next year" GridPane.rowIndex="20">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Target pre-tax operating margin" wrappingWidth="243.8401756286621" GridPane.rowIndex="22">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Target pre-tax operating margin" wrappingWidth="243.8401756286621" GridPane.rowIndex="21">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales to capital ratio up to year n =" wrappingWidth="223.64023971557617" GridPane.rowIndex="23">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales to capital ratio up to year n =" wrappingWidth="223.64023971557617" GridPane.rowIndex="22">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales to capital ratio for next year" wrappingWidth="243.84025192260742" GridPane.rowIndex="24">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Sales to capital ratio for next year" wrappingWidth="243.84025192260742" GridPane.rowIndex="23">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Target sales to capital ratio" wrappingWidth="243.84025192260742" GridPane.rowIndex="25">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Target sales to capital ratio" wrappingWidth="243.84025192260742" GridPane.rowIndex="24">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Risk-Free rate" wrappingWidth="127.0794677734375" GridPane.rowIndex="26">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Risk-Free rate" wrappingWidth="127.0794677734375" GridPane.rowIndex="25">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Initial cost of capital" wrappingWidth="164.3234748840332" GridPane.rowIndex="27">
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Initial cost of capital" wrappingWidth="164.3234748840332" GridPane.rowIndex="26">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="growthRateUpToN" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-                                                <TextField fx:id="nextYearGrowthRate" prefHeight="23.0" prefWidth="28.0" promptText="(%)" GridPane.columnIndex="1" GridPane.rowIndex="19" />
-                                                <TextField fx:id="finalYearGrowthRate" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="20" />
-                                                <Button fx:id="ChartOpen" mnemonicParsing="false" onAction="#openNewWindow" prefHeight="23.0" prefWidth="68.0" styleClass="submit-btn" text="Chart" GridPane.columnIndex="2" GridPane.rowIndex="21" />
-                                                <TextField fx:id="B24" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="21" />
-                                                <TextField fx:id="B26" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="22" />
-                                                <TextField fx:id="capitalRatioUptoN" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="23" />
-                                                <TextField fx:id="captialRatioForNextYear" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="24" />
-                                                <TextField fx:id="FinalYearCapitalRatio" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="25" />
-                                                <TextField fx:id="B301" prefHeight="27.0" prefWidth="147.0" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="26" />
-                                                <TextField fx:id="B31" prefHeight="27.0" prefWidth="163.0" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="27" />
-                                                <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ToTab81" prefHeight="23.0" prefWidth="75.0" styleClass="submit-btn" text="Capital " GridPane.columnIndex="2" GridPane.rowIndex="27" />
-                                                <Button fx:id="ChartOpenForCapitalRatio" mnemonicParsing="false" onAction="#openNewWindowForCaptialRatio" prefHeight="23.0" prefWidth="71.0" styleClass="submit-btn" text="Chart" GridPane.columnIndex="2" GridPane.rowIndex="25" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you have employee options outstanding?" GridPane.rowIndex="28">
+                                                <TextField fx:id="growthRateUpToN" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                                <TextField fx:id="nextYearGrowthRate" prefHeight="23.0" prefWidth="28.0" promptText="(%)" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                                                <TextField fx:id="finalYearGrowthRate" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                                                <Button fx:id="ChartOpen" mnemonicParsing="false" onAction="#openNewWindow" prefHeight="23.0" prefWidth="68.0" styleClass="submit-btn" text="Chart" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                                <TextField fx:id="B26" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="21" />
+                                                <TextField fx:id="capitalRatioUptoN" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+                                                <TextField fx:id="captialRatioForNextYear" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="23" />
+                                                <TextField fx:id="B301" prefHeight="27.0" prefWidth="147.0" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="25" />
+                                                <TextField fx:id="B31" prefHeight="27.0" prefWidth="163.0" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="26" />
+                                                <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ToTab81" prefHeight="23.0" prefWidth="75.0" styleClass="submit-btn" text="Capital " GridPane.columnIndex="2" GridPane.rowIndex="26" />
+                                                <Button fx:id="ChartOpenForCapitalRatio" mnemonicParsing="false" onAction="#openNewWindowForCaptialRatio" prefHeight="23.0" prefWidth="71.0" styleClass="submit-btn" text="Chart" GridPane.columnIndex="1" GridPane.rowIndex="24" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you have employee options outstanding?" GridPane.rowIndex="27">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <CheckBox fx:id="B33Yes" mnemonicParsing="false" onAction="#B33CheckYes" text="Yes" textFill="#2fa2e0" GridPane.columnIndex="1" GridPane.rowIndex="28">
+                                                <CheckBox fx:id="B33Yes" mnemonicParsing="false" onAction="#B33CheckYes" text="Yes" textFill="#2fa2e0" GridPane.columnIndex="1" GridPane.rowIndex="27">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </CheckBox>
-                                                <HBox prefHeight="60.0" prefWidth="179.0" style="-fx-spacing: 10; -fx-padding: 3;" GridPane.columnIndex="2" GridPane.rowIndex="28" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of options outstanding" GridPane.rowIndex="29">
+                                                <HBox prefHeight="60.0" prefWidth="179.0" style="-fx-spacing: 10; -fx-padding: 3;" GridPane.columnIndex="2" GridPane.rowIndex="27" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of options outstanding" GridPane.rowIndex="28">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B34" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="29" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Average strike price" wrappingWidth="130.03973770141602" GridPane.rowIndex="30">
+                                                <TextField fx:id="B34" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="28" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Average strike price" wrappingWidth="130.03973770141602" GridPane.rowIndex="29">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B35" prefHeight="4.0" prefWidth="28.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="30" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Average maturity" GridPane.rowIndex="31">
+                                                <TextField fx:id="B35" prefHeight="4.0" prefWidth="28.0" promptText="($)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="29" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Average maturity" GridPane.rowIndex="30">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B36" prefHeight="27.0" prefWidth="160.0" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="31" />
-                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Standard deviation on stock price" GridPane.rowIndex="32">
+                                                <TextField fx:id="B36" prefHeight="27.0" prefWidth="160.0" promptText="Enter a number" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="30" />
+                                                <Text fill="#f58a00" strokeType="OUTSIDE" strokeWidth="0.0" text="Standard deviation on stock price" GridPane.rowIndex="31">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
-                                                <TextField fx:id="B37" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="32" />
-                                                <CheckBox fx:id="B33No" mnemonicParsing="false" onAction="#B33CheckNo" text="No" textFill="#2fa2e0" GridPane.columnIndex="2" GridPane.rowIndex="28">
+                                                <TextField fx:id="B37" promptText="(%)" styleClass="input-group" GridPane.columnIndex="1" GridPane.rowIndex="31" />
+                                                <CheckBox fx:id="B33No" mnemonicParsing="false" onAction="#B33CheckNo" text="No" textFill="#2fa2e0" GridPane.columnIndex="2" GridPane.rowIndex="27">
                                                    <font>
                                                       <Font size="13.0" />
                                                    </font>
@@ -304,6 +292,8 @@
                                                       <Font size="13.0" />
                                                    </font>
                                                 </Text>
+                                                <TextField fx:id="country" promptText="Please select in the database" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="industry" promptText="Please select in the database" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               
                                                                                              </children>
                                           </GridPane>
@@ -987,7 +977,7 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <Pane fx:id="DatabasePane" prefHeight="200.0" prefWidth="200.0">
+            <Pane fx:id="DatabasePane" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <GridPane alignment="CENTER" hgap="10.0" layoutX="34.0" prefHeight="356.0" prefWidth="526.0">
                     <columnConstraints>
