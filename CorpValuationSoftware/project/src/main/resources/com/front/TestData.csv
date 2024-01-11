@@ -1,5 +1,0 @@
-Name,Country,Industry,Year,Revenue,EBIT,"Operating Expenses","Research and Development Expenses","Cost and Expenses","Operating Income","Interest Expense","EBIT Margin","Book Value of Equity(Total shareholders equity)","Book Value of debt(Total liabilities)","Weighted Average Shares Outstanding (Diluted)","Current stock price"
-AAPL,"United States",Electronics,2022,"394,328,000",,"51,345,000","26,251,000","274,891,000","119,437,000","2,931,000",0.34,"50,672,000","302,083,000","16,325,819",151.6
-AMD,,Semiconductors,1988,"23,601,000",,"9,339,000","5,005,000","22,337,000","1,264,000","88,000",0.14,0,"Book Value of debt:","1,571,000",82.11
-WMT,"United States",Stores,2022,"572,754,000",,"117,812,000",0,"546,812,000","25,942,000","1,994,000",0.05,"76,693,000","159,466,000","2,805,000",139.25
-GM,"United States",Auto,2022,"156,735,000",,"10,667,000",0,"146,421,000","10,314,000","987,000",0.15,"67,792,000","191,753,000","1,454,000",39.74

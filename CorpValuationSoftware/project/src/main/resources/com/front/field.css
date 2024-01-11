@@ -1,0 +1,60 @@
+/* Style for TextField, DatePicker, and ComboBox */
+.text-field, .date-picker, .combo-box {
+    -fx-font-size: 14px;
+    -fx-border-color: #c0c0c0;
+    -fx-border-width: 1;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: #ffffff;
+}
+
+/* Hover effect for TextField, DatePicker, and ComboBox */
+.text-field:hover, .date-picker:hover, .combo-box:hover {
+    -fx-border-color: #a0a0a0;
+}
+
+/* Focused style for TextField, DatePicker, and ComboBox */
+.text-field:focused, .date-picker:focused, .combo-box:focused {
+    -fx-border-color: #5a5a5a;
+}
+
+.label, .text {
+    -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+.label:hover {
+    -fx-text-fill: #000;
+    -fx-underline: true;
+}
+
+.button {
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: #333;
+    -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-border-color: #c0c0c0;
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.22), 2, 0.0, 2, 1);
+}
+
+.button:hover {
+    -fx-background-color: #e6e6e6;
+    -fx-cursor: hand;
+}
+
+.button:pressed {
+    -fx-background-color: #cccccc;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.22), 1, 0.0, 1, 1);
+}
+
+.button:focused {
+    -fx-border-color: #9ecaed;
+    -fx-border-insets: -1;
+    -fx-border-radius: 6px;
+}
+

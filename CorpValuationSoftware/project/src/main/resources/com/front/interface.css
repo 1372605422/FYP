@@ -120,7 +120,7 @@
 
 /*复选框选中后背景色*/
 .check-box:selected .box {
-    -fx-background-color: rgb(95, 184, 120);
+    -fx-background-color: #E6E6FA;
 }
 
 /*单选按钮样式*/
@@ -137,7 +137,7 @@
 
 /*单选按钮选中后背景色*/
 .radio-button:selected .radio {
-    -fx-background-color: rgb(95, 184, 120);
+    -fx-background-color: #E6E6FA;
 }
 
 /*表格内容居中显示
