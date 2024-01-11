@@ -1,0 +1,35 @@
+.menu-bar {
+    -fx-background-color: #f0f0f0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+}
+
+/* Style for menu items */
+.menu-bar .menu .menu-item {
+    -fx-background-color: transparent;
+}
+
+.menu-bar .menu .menu-item:hover {
+    -fx-background-color: #e1e1e1;
+}
+
+/* Style for the tab bar */
+.tab-pane {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Style for tabs */
+.tab-pane .tab {
+    -fx-background-color: #e8e8e8;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 4px;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Style for the selected tab */
+.tab-pane .tab:selected {
+    -fx-background-color: #d7d7d7;
+    -fx-border-color: #5a5a5a;
+}

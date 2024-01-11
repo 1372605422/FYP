@@ -27,6 +27,8 @@ public class A18TerminalValue {
         BigDecimal getTerminalRevenueGrowthRate =new BigDecimal(Double.toString(revenueGrowthRate.getTerminalRevenueGrowthRate()));
         BigDecimal getTerminalCashFlow=new BigDecimal(Double.toString(terminalCashFlow.getTerminalCashFlow()));
         BigDecimal ans1=terminalostOfCapital.subtract(getTerminalRevenueGrowthRate);
+        if (ans1.compareTo(BigDecimal.ZERO)==0)
+            ans1=BigDecimal.ONE;
         BigDecimal ans2=getTerminalCashFlow.divide(ans1,20, RoundingMode.HALF_UP);
 
 
