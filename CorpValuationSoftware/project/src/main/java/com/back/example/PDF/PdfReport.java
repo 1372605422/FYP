@@ -778,16 +778,16 @@ public class PdfReport {
         table13.addCell(createCell("Number of shares", textfont));
         bd=isRounded(numberOfShares.getNumberOfShares());
         table13.addCell(createCell(String.valueOf(bd), textfont));
-        table13.addCell(createCell("Estimated value /share", textfont));
-        bd=isRounded(estimatedValueShare.getEstimatedValueShare());
-        table13.addCell(createCell(String.valueOf(bd), textfont));
+
         table13.addCell(createCell("Price", textfont));
         table13.addCell(createCell(String.valueOf(price.getPrice()), textfont));
         table13.addCell(createCell("Price as % of value", textfont));
         v=isPercentage(priceAsOfValue.getPriceAsPercentageOfValue());
         table13.addCell(createCell(v, textfont));
 
-
+        table13.addCell(createCell("Estimated value /share", textfont));
+        bd=isRounded(estimatedValueShare.getEstimatedValueShare());
+        table13.addCell(createCell(String.valueOf(bd), textfont));
 
 
 

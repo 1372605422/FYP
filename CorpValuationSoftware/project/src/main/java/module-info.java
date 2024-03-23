@@ -11,10 +11,11 @@ module com.front {
     requires itextpdf;
     requires rxcontrols;
     requires org.apache.poi.ooxml;
+    requires jfoenix;
 
 
-    opens com.front to javafx.fxml;
-    exports com.front;
+    opens com.GUI to javafx.fxml;
+    exports com.GUI;
     exports com.back.example.CostOfCapital;
     exports com.back.example.InputSheet;
     exports com.back.example.OutputSheet;

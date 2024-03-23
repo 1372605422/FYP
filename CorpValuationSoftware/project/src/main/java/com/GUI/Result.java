@@ -6,7 +6,7 @@
  * @version [V1.0]
  * @since [2023/3/30]
  */
-package com.front;
+package com.GUI;
 
 import com.back.example.OutPutMethod;
 import com.back.example.OutPutMethod2;
@@ -15,7 +15,6 @@ import com.itextpdf.text.PageSize;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;

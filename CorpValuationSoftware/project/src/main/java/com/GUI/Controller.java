@@ -1,4 +1,4 @@
-package com.front;
+package com.GUI;
 
 import com.back.StaticData.InputData;
 import com.database.FileUtils;
@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -114,6 +115,13 @@ public class Controller {
     public TextField industry;
     public TextField OperatingMargin;
     public TextField TargetSalesToCapitalRatio;
+
+    //机器学习模型展示页面
+    public Button PredictionButton;
+    public Text PredictionID;
+    public ImageView PredictionImg;
+    public Button PredictionSetting;
+    public Slider PredictionPercentage;
 
     //    tab页面
     @FXML
@@ -635,6 +643,7 @@ public class Controller {
         country.setText(c);
         industry.setText(i);
         B2.setText(b);
+        PredictionID.setText(b);
 
 
         double totalAssets = 0.0;
